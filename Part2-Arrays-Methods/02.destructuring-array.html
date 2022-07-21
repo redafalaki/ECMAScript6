@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Destructuring assignment</title>
+</head>
+
+<body>
+    <script>
+        /*
+            Destructuring assignment:
+            The destructuring assignment syntax is a JavaScript expression 
+            that makes it possible to unpack values from arrays, or properties from objects, 
+            into distinct variables.
+
+            Link: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
+        */
+
+        // Simple array of string
+        /*
+            "AB": "Alberta",
+            "BC": "British Columbia",
+            "MB": "Manitoba",
+            "NB": "New Brunswick",
+            "NL": "Newfoundland and Labrador",
+            "NT": "Northwest Territories",
+            "NS": "Nova Scotia",
+            "NU": "Nunavut",
+            "ON": "Ontario",
+            "PE": "Prince Edward Island",
+            "QC": "Quebec",
+            "SK": "Saskatchewan",
+            "YT": "Yukon Territory"
+        */
+        let provinces = [
+            "Alberta",
+            "British Columbia",
+            "Manitoba",
+            "New Brunswick",
+            "Newfoundland &amp; Labrador",
+            "Northwest Territories",
+            "Nova Scotia",
+            "Nunavut",
+            "Ontario",
+            "Prince Edward Island",
+            "Quebec",
+            "Saskatchewan",
+            "Yukon Territories"
+        ];
+
+        console.log(`
+        First Province: ${provinces[0]}
+        Second Province: ${provinces[1]}
+        Third Province: ${provinces[2]}
+        `);
+
+        /*
+        First Province: Alberta
+        Second Province: British Columbia
+        Third Province: Manitoba
+        */
+
+        /*
+        Or using Destructuring assignment
+        */
+        let [prov1, prov2, prov3] = provinces;
+
+        console.log(`
+        First Province: ${prov1}
+        Second Province: ${prov2}
+        Third Province: ${prov3}
+        `);
+        /*
+        First Province: Alberta
+        Second Province: British Columbia
+        Third Province: Manitoba
+        */
+
+        /*
+        Now we only need: Alberta, Manitoba, and Nova Scotia
+        */
+        let [ab, , mb, , , , , ns] = provinces;
+        console.log(`
+        AB: ${ab}
+        MB: ${mb}
+        NS: ${ns}
+        `);
+
+        /*
+        AB: Alberta
+        MB: Manitoba
+        NS: Nunavut
+        */
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>includes with Arrays</title>
+</head>
+
+<body>
+    <script>
+        /*
+        As we used includes with strings,
+        We can use it with arrays:
+        
+        myArray.includes()
+        The includes() method determines whether an array includes a certain value among its entries, 
+        returning true or false as appropriate.
+        */
+        let provinces = [
+            "Alberta",
+            "British Columbia",
+            "Manitoba",
+            "New Brunswick",
+            "Newfoundland &amp; Labrador",
+            "Northwest Territories",
+            "Nova Scotia",
+            "Nunavut",
+            "Ontario",
+            "Prince Edward Island",
+            "Quebec",
+            "Saskatchewan",
+            "Yukon Territories"
+        ];
+
+        // Check if the provinces array has "Ontario":
+        console.log(provinces.includes("Ontario")); // true
+
+        console.log(provinces.includes("abc")); // false
+    </script>
+</body>
+
+</html>

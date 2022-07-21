@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Let Keyword</title>
+
+    <style>
+        /* Adding some styles just to see the div elements in the browser */
+        #box1,
+        #box2 {
+            display: flex;
+            /* Adding Flex Box */
+            justify-content: space-around;
+            /* Having some space in between/around */
+        }
+
+        #box1>div,
+        #box2>div {
+            height: 5em;
+            width: 5em;
+            background-color: navy;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Let with DOM</h1>
+    <div id="box1">
+    </div>
+
+    <hr>
+
+    <div id="box2">
+    </div>
+
+    <script>
+        // More Examples by creating DOM elements:
+        var div;
+        var box1 = document.getElementById("box1");
+
+        // Creating 5 div elements using for loop using var keyword:
+        for (var i = 0; i < 5; i++) {
+            // Creating a div element:
+            div = document.createElement("div");
+
+            // Attaching an event handler "onClick" to each div:
+            // Assign an anonymous function to it
+            div.onclick = function () {
+                // Every time the div is clicked, we want to output the value of the loop counter "i"
+                // Which is the index of each element, in this we will have different index values from 0 to 4
+                // using alert()
+                alert("The current clicked box has the value of " + i);
+            }
+            // Appending the current created div as a child to its parent div#box1:
+            box1.appendChild(div);
+        } // end loop
+
+        var box2 = document.getElementById("box2");
+        // Creating 5 div elements using for loop using let keyword:
+        for (let i = 0; i < 5; i++) {
+            // Creating a div element:
+            div = document.createElement("div");
+
+            // Attaching an event handler "onClick" to each div:
+            // Assign an anonymous function to it
+            div.onclick = function () {
+                // Every time the div is clicked, we want to output the value of the loop counter "i"
+                // Which is the index of each element, in this example all will have the same index value of 5!
+                // using alert()
+                alert("The current clicked box has the value of " + i);
+            }
+            // Appending the current created div as a child to its parent div#box1:
+            box2.appendChild(div);
+        } // end loop
+    </script>
+</body>
+
+</html>

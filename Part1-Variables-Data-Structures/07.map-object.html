@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map Object</title>
+</head>
+
+<body>
+    <script>
+        /*
+            Maps object holding key/value pairs
+            Being able to use an Object as a key is an important Map feature.
+
+            Map objects are collections of key-value pairs. 
+            A key in the Map may only occur once; it is unique in the Map's collection.
+
+            Map is a collection of keyed data items, just like an Object. 
+            But the main difference is that Map allows keys of any type.
+
+            Map keys can be any data type
+
+            Map Object Methods and Properties:
+            map.set(key, value) – stores the value by the key.
+            map.get(key) – returns the value by the key, undefined if key doesn’t exist in map.
+            map.has(key) – returns true if the key exists, false otherwise.
+            map.delete(key) – removes the value by the key.
+            map.clear() – removes everything from the map.
+            map.size – returns the current element count.
+        */
+
+        // Create a new Map
+        const courses = new Map();
+        console.log(courses); // Map(0) {size: 0}
+
+        // Adding new elements to the Map using map.set(key, value) – stores the value by the key.
+        // Key= "Computer Programming" and value = the object {classRoom: 717, time: "10:00 AM - 1:00 PM"}
+        courses.set(
+            "course1",
+            {
+                title: "Computer_Programming",
+                classRoom: 717,
+                time: "10:00 AM - 1:00 PM"
+            }
+        );
+
+        courses.set(
+            "course2",
+            {
+                title: "Web_Development",
+                classRoom: 312,
+                time: "11:00 AM - 2:00 PM"
+            }
+        );
+
+        courses.set(
+            "course3",
+            {
+                title: "Microsoft_Office",
+                classRoom: 245,
+                time: "9:00 AM - 11:00 AM"
+            }
+        );
+
+        console.log(courses);
+        /*
+        Map(3) {'course1' => {…}, 'course2' => {…}, 'course3' => {…}}
+
+        [[Entries]]
+        0: {"course1" => Object}
+        key: "course1"
+        value: {title: 'Computer_Programming', classRoom: 717, time: '10:00 AM - 1:00 PM'}
+
+        1: {"course2" => Object}
+        key: "course2"
+        value: {title: 'Web_Development', classRoom: 312, time: '11:00 AM - 2:00 PM'}
+
+        2: {"course3" => Object}
+        key: "course3"
+        value: {title: 'Microsoft_Office', classRoom: 245, time: '9:00 AM - 11:00 AM'}
+
+        size: 3
+        [[Prototype]]: Map
+        */
+
+        /*
+            Notice below, we cannot access Map keys with dot notation as we do with normal object!
+            We can only use .get() method
+        */
+        console.log(courses.course1); // undefined
+
+        // using .get() method:
+        console.log(courses.get("course1"));
+        /*
+            {title: 'Computer_Programming', classRoom: 717, time: '10:00 AM - 1:00 PM'}
+            classRoom: 717
+            time: "10:00 AM - 1:00 PM"
+            title: "Computer_Programming"
+            [[Prototype]]: Object
+        */
+
+        // Creating Map object that has keys of different data types:
+
+        const myMapObject = new Map([
+            [Boolean, "True-False"],
+            [new Date(), "now"],
+            [100, "Maximum"],
+            [0, "Minimum"],
+            ["Advanced", "Level"]
+        ]);
+
+        console.log(myMapObject);
+        /*
+        Map(5) {ƒ => 'True-False', Wed Jul 20 2022 10:47:43 GMT-0400 (Eastern Daylight Time) => 'now', 100 => 'Maximum', 0 => 'Minimum', 'Advanced' => 'Level'}
+        [[Entries]]
+        0: {function Boolean() { [native code] } => "True-False"}
+        1: {Wed Jul 20 2022 10:47:43 GMT-0400 (Eastern Daylight Time) => "now"}
+        2: {100 => "Maximum"}
+        3: {0 => "Minimum"}
+        4: {"Advanced" => "Level"}
+        size: 5
+        */
+
+        // Using size property:
+        console.log(courses.size); // 3
+        console.log(myMapObject.size); // 5
+
+        /*
+        Using .forEach() method
+
+        The forEach() method executes a provided function once for each array element.
+
+        Parameters:
+        ===========
+        1. callbackFn => Function to execute on each element.
+
+        The function is called with the following arguments:
+
+            > element
+            The current element being processed in the array.
+
+            > index
+            The index of element in the array.
+
+            > array
+            The array forEach() was called upon.
+
+        2. thisArg (Optional) => Value to use as this when executing callbackFn.
+
+        Please refer to my two JavaScript Lecture Repos for more explications and more examples about using .forEach() method
+        */
+
+        console.log("Using .forEach():")
+        courses.forEach(function (item) {
+            console.log(item);
+        });
+        /*
+        {title: 'Computer_Programming', classRoom: 717, time: '10:00 AM - 1:00 PM'}
+        {title: 'Web_Development', classRoom: 312, time: '11:00 AM - 2:00 PM'}
+        {title: 'Microsoft_Office', classRoom: 245, time: '9:00 AM - 11:00 AM'}
+        */
+
+        // Or using the shorthand way with the arrow function! :-)
+        // This type of function will be discussed in details later
+        courses.forEach(item => {
+            console.log(item);
+        });
+        /*
+        {title: 'Computer_Programming', classRoom: 717, time: '10:00 AM - 1:00 PM'}
+        {title: 'Web_Development', classRoom: 312, time: '11:00 AM - 2:00 PM'}
+        {title: 'Microsoft_Office', classRoom: 245, time: '9:00 AM - 11:00 AM'}
+        */
+
+    </script>
+</body>
+
+</html>

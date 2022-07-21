@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template String</title>
+
+</head>
+
+<body>
+    <script>
+        /*
+        Formatting JavaScript code with varaibles
+        */
+        function print(name) {
+            /*
+            Notice that there is no need to add a literal space with ",":
+            "Hello ", name
+            Because one space will be added by JS automatically
+            so just type: "Hello", name
+            */
+            console.log("Hello", name);
+
+            /*
+            Using the + sign for concatenating, we need a space for readability
+            */
+            console.log("Hello " + name);
+
+            /*
+            Another way, is using Template String with back ticks (quote) "`" with ${ ourVaraible }
+            */
+            console.log(`Hello ${name}`);
+        }
+
+        print("Max");
+
+        // Accept employee name and how many hours they worked
+        // Setting a default value of 0 in case if no value is being passed
+        function payment(name, hours = 0) {
+            let perHour = 20.00; // $20.00 per hour
+            console.log(`
+            Hi ${name},
+            Payment PerHour: $${perHour} 
+            Total Hours: ${hours}
+            Total Payment: $${hours * perHour}
+            Thank you ${name}!
+            `);
+        }
+
+        payment("Steve");
+        payment("Martin", 24);
+    </script>
+</body>
+
+</html>

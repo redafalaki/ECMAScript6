@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symbols</title>
+</head>
+
+<body>
+    <script>
+        /*
+        JavaScript types:
+        ================
+        The set of types in the JavaScript language consists of primitive values and objects.
+
+        Primitive:
+        In JavaScript, a primitive (primitive value, primitive data type) 
+        is data that is not an object and has no methods or properties. 
+        All types except objects define immutable values (that is, values which can't be changed). 
+        For example, Strings are immutable. We refer to values of these types as "primitive values".
+        
+        There are 7 primitive data types:
+        string
+        number
+        bigint
+        boolean
+        undefined
+        symbol
+        null
+
+        NOTE: "symbol" is a new primitive type in JavaScript (Released in ES6-2015)
+
+        A Symbol is a unique and immutable primitive value and may be used as the key of an Object property 
+        - Creating a symbol using a factory function named "Symbol()"
+        - Every Symbol() call is guaranteed to return a unique Symbol
+        - It represents a unique "hidden" identifier that no other code can accidentally access
+        */
+        const id = Symbol();
+
+        console.log(id); // Symbol()
+
+        /*
+        Creating a literal object below
+        */
+
+        const courseInfo = {
+            title: "Beginning JavaScript",
+            topics: ["data types", "input/output", "conditions", "loops", "functions"],
+            hours: 42
+        }
+
+        console.log(courseInfo);
+        /*
+        {title: 'Beginning JavaScript', topics: Array(5), hours: 42}
+        */
+
+        /*
+        Adding another property/info named "id" to the "courseInfo"
+        with a unique value of 9421
+        */
+        courseInfo[id] = 9421;
+        console.log(courseInfo);
+        // Now courseInfo[id] = 9421
+        // But courseInfo.id is still undefined
+        /*
+        {title: 'Beginning JavaScript', topics: Array(5), hours: 42, Symbol(): 9421}
+        */
+        console.log(courseInfo.id); // undefined
+        console.log(courseInfo.title); // Beginning JavaScript
+        console.log(courseInfo.topics); // (5) ['data types', 'input/output', 'conditions', 'loops', 'functions']
+        console.log(courseInfo.hours); // 42
+    </script>
+</body>
+
+</html>

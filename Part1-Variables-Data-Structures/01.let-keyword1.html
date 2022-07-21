@@ -1,0 +1,57 @@
+<!-- Generating the HTML5 Boilerplate: -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Let Keyword</title>
+</head>
+
+<body>
+    <script>
+        // The old way of creating a variable using "var" keyword
+        // language is a "global" variable as it's declared in the main script
+        var language = "JavaScript";
+        console.log("Global-Programming Language (Before Block): ", language);
+
+        // Check if the "language" exists
+        if (language) {
+            // This will reset the value of the global variable "language":
+            var language = "ECMAScript6";
+            console.log("Block-Programming Language (Inside Block): ", language);
+        }
+
+        console.log("Global-Programming Language (After Block): ", language);
+
+
+
+        console.log("More Examples:");
+        // Let's try the same logic but with using "let" keyword:
+        var course = "Computer Programming"
+        console.log("Global-course (Before Block): ", course);
+
+        // Check if the "language" exists
+        if (course) {
+            // This will NOT reset the value of the global variable "course"?
+            // Because "let" keyword has a block scope
+            let course = "Graphic Design";
+            console.log("Block-course (Inside Block): ", course);
+        }
+        console.log("Global-course (After Block): ", course);
+
+
+
+        var test = 90;
+        var test = 98; // It's valid to use var for the same variable more than one time
+
+        // The following code is WRONG:
+        /*
+        let try = true;
+        let try = false; // It's Invalid to use let for the same variable more than one time
+        */
+    </script>
+</body>
+
+</html>

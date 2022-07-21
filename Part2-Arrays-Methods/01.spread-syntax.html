@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spread Syntax</title>
+</head>
+
+<body>
+    <script>
+        /*
+        ...
+
+        Spread syntax (...) allows an iterable, such as an array or string, 
+        to be expanded in places where zero or more arguments (for function calls) 
+        or elements (for array literals) are expected. 
+        */
+
+        const stingray = ["Smooth Jazz", "Jazz Classics", "Classic Master", "Easy Listening"];
+        const newsChannel = ["cp24", "CTV news", "CityTV", "Fox29"];
+        const sportsChannel = ["TSN", "SNE", "SNW", "SNP"];
+
+        let musicChannels = ["Rock", "Nostalgia", stingray]; // this will create a nested array!
+
+        console.log(musicChannels);
+        // Output a nested array!
+        /*
+        Array(3)
+            0: "Rock"
+            1: "Nostalgia"
+            2: Array(4) 
+                0: "Smooth Jazz"
+                1: "Jazz Classics"2: "Classic Master"
+                3: "Easy Listening"
+                length: 4
+            
+                length: 3
+        */
+
+
+        /*
+        We can use ... to any new item(s) to the original array and the same level like other elements:
+        The new items are going to be spread through the original array,
+        and that's way it's called spread operator/syntax
+        */
+        let allNews = ["CNN", "Global News", ...newsChannel];
+        console.log(allNews);
+        /*
+        (6) ['CNN', 'Global News', 'cp24', 'CTV news', 'CityTV', 'Fox29']
+        0: "CNN"
+        1: "Global News"
+        2: "cp24"
+        3: "CTV news"
+        4: "CityTV"
+        5: "Fox29"
+        */
+
+        let rgb = ['red', 'green', 'blue'];
+        let cmyk = ['cyan', 'magenta', 'yellow', 'black'];
+        let mergeColors = [...rgb, ...cmyk];
+        console.log(merge); // [ 'red', 'green', 'blue', 'cyan', 'magenta', 'yellow', 'black' ]
+
+
+        /*
+        Function Rest Parameter (...)
+        The same symbol (...) can be called the rest parameter when it's used with function parameters
+        It allows a function to treat an indefinite number of arguments as an array:
+        */
+        function add(...numbers) {
+            let total = 0;
+            for (let num of numbers) total += num;
+            return total;
+        }
+
+        let result = add(4, 9, 16, 25, 29, 100, 66, 77);
+        console.log("total", result); // total 326
+
+        // Create another function to do the same job but passing the array without ...
+        function sum(numbers) {
+            let total = 0;
+            // Error: Uncaught TypeError: numbers is not iterable
+            for (let num of numbers) total += num;
+            return total;
+        }
+
+        // Calling this function will generate an error => numbers is not iterable
+        /*
+        let final = sum(4, 9, 16, 25, 29, 100, 66, 77);
+        console.log("total", final);
+        */
+
+        // Using the classical way:
+        function collect(numbers) {
+            let total = 0;
+            // Error: Uncaught TypeError: numbers is not iterable
+            for (let i = 0; i < numbers.length; i++) total += numbers[i];
+            return total;
+        }
+
+        let numArray = [4, 9, 16, 25, 29, 100, 66, 77];
+        /*
+        Notice below, we cannot pass all the numbers as a one shot as we did with ...
+        we have to save them in to an array as we did with "numArray",
+        then pass the numArray to the function:
+        */
+        let output = collect(numArray);
+        console.log("total", output); // total 326
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object Literal</title>
+</head>
+
+<body>
+    <script>
+        /*
+        To Recap:
+        String literals: A string literal is zero or more characters enclosed in double (") or single quotation marks (').    
+        
+        Examples:
+        "bar"
+        '1234'
+        'one line \n new line'
+        "John's cat"
+        
+        Object Literals:
+        An object literal is a list of zero or more pairs of property names and associated values of an object,
+        enclosed in curly braces ({}).
+        */
+
+        var car = {
+            // Object Properties:
+            brand: 'Toyota',
+            year: 2020,
+            model: 'SXT',
+
+            // Object Methods:
+            buyCar: function () {
+                if (this.brand == 'Honda') {
+                    return this.brand;
+                } else {
+                    return "Sorry, we don't sell " + this.brand + ".";
+                }
+            },
+
+            /*
+            Another way is to create a function outside the object,
+            And just call the function signiture here:
+    
+            We have created the function checkCar() individually/separately outside this object
+            */
+            check: checkCar(2020)
+        }
+
+
+        // A simple function to be used in the literal object "car":
+        /*
+            This function will check if the car needs a test (if it's 10+ years)
+        */
+        function checkCar(year) {
+            const currentYear = new Date().getFullYear()  // returns the current year based on your system
+            const difference = currentYear - year;
+            if (difference > 10) {
+                return (`
+                Now we are in ${currentYear},
+                Your car model is ${year},
+                So your car is ${difference} years in use. 
+                which is more than 10 years. It needs Emission test`);
+            } else {
+                return (`
+                Your car model is ${year},
+                So your car is ${difference} years in use. 
+                It doesn't need Emission test`);
+            }
+        }
+
+        let name = "BMW";
+
+        console.log(car.brand); // Toyota
+        console.log(car.year); // 2020
+        console.log(car.model); // SXT
+        console.log(car.buyCar()); // Sorry, we don't sell undefined.
+        /*
+        IMPORTANT NOTE:
+        Although property "check" has the value of a function "checkCar()" 
+        But because we created its function outside, and we are just calling the function as a value for "check"
+        We CANNOT access/call it by using:
+        > car.check()
+        The above syntax will generate this error: Uncaught TypeError: car.check is not a function
+
+        We need to call it as a normal property (not as a method):
+        > car.check
+        */
+        // console.log(car.check()); // Error => Uncaught TypeError: car.check is not a function
+        console.log(car.check);
+
+        /*
+        Examples:
+        Creating a function that returns an object
+        */
+        function singer(name, song) {
+            // This function is returning an object:
+            return {
+                name: name,
+                song: song,
+                singingLoud: function () {
+                    let singing = this.song.toUpperCase();
+                    console.log(`${this.name} is singing "${singing}" loudly and with enthusiasm!`)
+                }
+            }
+        }
+
+        // calling our function singer() with its method "singingLoud()" => function/method chaining 
+        singer("Frank Sinatra", "My Way").singingLoud();
+
+        /*
+        Instead of using the long code and to avoid the repetition as we have in function "singer()":
+        name: name,
+        song: song,
+
+        We can use "Object Literal Enhancement":
+        Notice below, no need for:
+        name: name,
+        dance: dance,
+        
+        Just:
+            name,
+            dance,
+        */
+        function dancer(name, dance) {
+            // This function is returning an object:
+            return {
+                name,
+                dance,
+                dancingFast: function () {
+                    let dancing = this.dance.toUpperCase();
+                    console.log(`${this.name} is dancing "${dancing}" fast and with enthusiasm!`)
+                }
+            }
+        }
+
+        // calling our function dancer() with its method "dancingFast()" => function/method chaining 
+        dancer("Fred Astaire", "Tango").dancingFast();
+    </script>
+</body>
+
+</html>

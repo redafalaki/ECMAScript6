@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Object</title>
+</head>
+
+<body>
+    <script>
+        /*
+        The Set object lets you store unique values of any type, whether primitive values or object references.
+
+        Set objects are collections of values. A value in the Set may only occur once; it is unique in the Set's collection. 
+        
+        You can iterate through the elements of a set in insertion order.
+
+        Properties:
+        .size => Returns the number of values in the Set object.
+
+        Methods:
+        .add(value) => Inserts a new element with a specified value in to a Set object, 
+        if there isn't an element with the same value already in the Set.
+
+        .clear() => Removes all elements from the Set object.
+
+        .delete(value) => Removes the element associated to the value 
+        and returns a boolean asserting whether an element was successfully removed or not. 
+        .has(value) will return false afterwards.
+
+        .has(value) => Returns a boolean asserting whether an element is present 
+        with the given value in the Set object or not.
+        */
+        let instruments = new Set()
+        instruments.add("Piano");
+        instruments.add("Guitar");
+        console.log(instruments); // Set(2) {'Piano', 'Guitar'} ...
+        /*
+        set(3)
+        [[Entries]]
+        0: "Piano" 
+            value: "Piano"
+        1: "Guitar"
+            value: "Guitar"
+        2: "Sax" 
+            value: "Sax"
+        
+        size: 3
+        [[Prototype]]: Set
+        */
+
+        instruments.add("Sax");
+        instruments.add("Bass");
+        console.log(instruments); // Set(4) {'Piano', 'Guitar', 'Sax', 'Bass'} ...
+
+        console.log(instruments.size); // 4
+
+        // Check if our instruments set has a violin in it
+        console.log(instruments.has("violin")); // false
+
+        // Don't forget that JavaScript is case-sensetive like other programming languages
+        console.log(instruments.has("bass")); // false
+        console.log(instruments.has("Bass")); // true
+
+        // .delete() method:
+        instruments.delete("bass"); // There is no match with this value so nothing will be deleted
+        // Notice that JS will not display any error message or warning if the value exists or doesn't exist
+        console.log(instruments);
+
+        instruments.delete("Bass"); // This will remove the value of "Bass"
+        console.log(instruments);
+
+        instruments.add("Piano"); // Adding an already existing value will not change anything
+        console.log(instruments);
+
+        /*
+        set() acting as an array, but we CANNOT use .map() method with set as we used with arrays,
+        we can use forEach() with set objects instead.
+        Please refer to my JavaScript courses, pdf files, and repos for more clarification and reviewing
+        */
+        instruments.forEach(function (instrument) {
+            console.log(instrument);
+        });
+
+        /*
+        Piano
+        Guitar
+        Sax
+        */
+
+        // Yes, we can also use the shorthand with arrow function (same output):
+        // This type of function will be discussed in details later
+        instruments.forEach((instrument) => {
+            console.log(instrument);
+        });
+    </script>
+</body>
+
+</html>

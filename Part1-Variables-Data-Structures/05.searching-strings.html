@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Searching Strings</title>
+
+</head>
+
+<body>
+    <script>
+        const college = "Georgian@ILAC";
+        console.log("String Methods:");
+        /*
+        String method:
+        String.startsWith(searchString)
+        returns boolean
+
+        NOTE: It's case-sensitive
+        */
+        console.log("startsWith() Method:");
+        console.log(college.startsWith("Geo")); // true
+        console.log(college.startsWith("geo")); // false
+        console.log(college.startsWith("ILAC")); // false
+
+        // .endsWith() => search from the end
+        console.log("endsWith() Method:");
+        console.log(college.endsWith("ILAC")); // true
+        console.log(college.endsWith("ilac")); // false
+        console.log(college.endsWith("Geo")); // false
+
+        // Searching within a string: .includes() method:
+        console.log("includes() Method:");
+        console.log(college.includes("@")); // True
+        console.log(college.includes("Georgian")); // True
+        console.log(college.includes("ILAC")); // True
+
+        /*
+        Using .search() method
+        returns a number which represent the index of the search string
+        - Don't forget that strings is 0 based index
+        - Only find the first instance of the search string
+        - Gives the index of the first character of the search string
+        */
+        console.log(college.search("@")); // 8
+        console.log(college.search("Georgian")); // 0
+        console.log(college.search("ILAC")); // 9
+    </script>
+</body>
+
+</html>

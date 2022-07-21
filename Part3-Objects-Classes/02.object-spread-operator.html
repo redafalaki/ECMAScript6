@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Objects with Spread Operator</title>
+</head>
+
+<body>
+    <script>
+        /*
+        The spread operator gives you access to all of the items inside these iterable objects.
+        As we used the spread operator to combine two arrays into one,
+        We can do the same with objects: 
+
+        NOTE: 
+        Below we used the literal object syntax to create two object that have different keys.
+        Later in this repo, we will use the idea of Classes (Blueprint) and Objects for complex and advanced OOP
+        */
+
+        const bio = {
+            name: "Alex Chow",
+            dob: "1974-07-12",
+            occupation: "Software Developer"
+        };
+
+
+        const contact = {
+            phone: "416-123-1234",
+            email: "alexchow@InLoveWithJavaScript.com",
+            address: "123 Yonge St. Toronto-Ontario Q1W2E3"
+        };
+
+        /*
+        Q) What we use to loop through an object in JavaScript?
+        
+        HINT: We CANNOT use the following tools/code as they work with Arrays only:
+
+        Wrong Solution#1:  TypeError: empInfo.forEach is not a function:
+        empInfo.forEach(element => {
+            console.log(element);
+        });
+
+        Wrong Solution#2: TypeError: empInfo.map is not a function:
+        empInfo.map(element => {})
+
+        Wrong Solution#3: TypeError: TypeError: items are not iterable:
+        for (const element of empInfo) {}
+
+        Right Solution: Using For...in Loop:
+
+        Syntax:
+        for (const variable in object) {
+            statement
+        }
+                
+        Syntax Example:
+        for (const property in object) {
+             console.log(`${property}: ${object[property]}`);
+        };
+        */
+
+        // For clarity, I will use document.write
+        document.write("<h2>bio object keys/values:</h2>");
+        for (const key in bio) {
+            document.write(`<br>${key}: ${bio[key]}`);
+        };
+
+        document.write("<h2>contact object keys/values:</h2>");
+        for (const key in contact) {
+            document.write(`<br>${key}: ${contact[key]}`);
+        };
+        document.write("<hr>");
+
+
+        /*
+        We can use "Object.assign()" method to combine the above two objects, 
+        this method ".assign()" copies all enumerable own properties from one or more source objects 
+        to a target object. 
+        It returns the modified target object.
+
+        Syntax
+        Object.assign(target, ...sources)
+
+        Link: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
+        */
+        const empInfo = Object.assign(bio, contact);
+        console.log(empInfo);
+        /*
+        {
+            name: 'Alex Chow', 
+            dob: '1974-07-12', 
+            occupation: 'Software Developer', 
+            phone: '416-123-1234', 
+            email: 'alexchow@InLoveWithJavaScript.com',,
+            address: "123 Yonge St. Toronto-Ontario Q1W2E3"
+        };
+        */
+
+        document.write("<h2>empInfo (bio+contact) object keys/values:</h2>");
+        for (const key in empInfo) {
+            document.write(`<br>${key}: ${empInfo[key]}`);
+        };
+
+        console.log("Employee Info (For... In Loop):");
+        for (const key in empInfo) {
+            console.log(`${key}: ${empInfo[key]}`);
+        };
+        /*
+        name: Alex Chow
+        dob: 1974-07-12
+        occupation: Software Developer
+        phone: 416-123-1234
+        email: alexchow@InLoveWithJavaScript.com
+        address: 123 Yonge St. Toronto-Ontario Q1W2E3
+        */
+
+
+        // One more object:
+        const edu = {
+            degree: "Computer Programming Certificate",
+            college: "Centennial College",
+            year: 2012
+        };
+
+        // Adding the three objects: bio, contact, and edu into one using Object.assign()
+        const empFullInfo = Object.assign(bio, contact, edu);
+
+        console.log("Employee Full Information (For... In Loop):");
+        // Using for... in loop to output all the members (key/values) of the new object "empFullInfo":
+        for (const key in empFullInfo) {
+            console.log(`${key}: ${empFullInfo[key]}`);
+        };
+        /*
+        name: Alex Chow
+        dob: 1974-07-12
+        occupation: Software Developer
+        phone: 416-123-1234
+        email: alexchow@InLoveWithJavaScript.com
+        address: 123 Yonge St. Toronto-Ontario Q1W2E3
+        degree: Computer Programming Certificate
+        college: Centennial College
+        year: 2012
+        */
+        document.write("<h2>Employee Full Information (bio+contact+edu) object keys/values:</h2>");
+        for (const key in empFullInfo) {
+            document.write(`<br>${key}: ${empFullInfo[key]}`);
+        };
+
+        /*
+        Important NOTE:
+        We were able to merge all the three object above using Object.assign().
+        Be careful that properties/keys in the target object are overwritten by properties in the sources if they have the same key. Later sources' properties overwrite earlier ones.
+        */
+
+        /*
+        Beside using .assign() method, based on this file topic, we can use the "Spread Operator" ... also!
+        */
+        const employeeInformation = { ...bio, ...contact, ...edu };
+        document.write("<h2>Employee Full Information (bio+contact+edu) object keys/values:</h2>");
+        for (const key in employeeInformation) {
+            document.write(`<br>${key}: ${employeeInformation[key]}`);
+        };
+        document.write("<hr><hr><hr><hr><hr><hr>");
+
+        const myCar1 = {
+            brand: 'Honda',
+            model: 'HRV-5',
+            color: 'blue',
+            year: 2012
+        };
+
+        const myCar2 = {
+            brand: "Subaru",
+            model: "Crosscheck",
+            color: "brown",
+            year: 2023
+        };
+
+        document.write("<h2>myCar1 object keys/values:</h2>");
+        for (const key in myCar1) {
+            document.write(`<br>${key}: ${myCar1[key]}`);
+        };
+        document.write("<h2>myCar2 object keys/values:</h2>");
+        for (const key in myCar2) {
+            document.write(`<br>${key}: ${myCar2[key]}`);
+        };
+
+        const myCars1 = Object.assign(myCar1, myCar2);
+
+        document.write("<h2>My Cars (myCar1+myCar2) object keys/values:</h2>");
+        /*
+            Notice below since myCar1 object and myCar2 object both have the same keys/properties,
+            so the last one in the .assign() arguments will override the values of the previous one(s)
+            only for the same keys/properties.
+            
+            The properties are overwritten by other objects that have the same properties later in the parameters order.
+        */
+        document.write("<p>Notice below since myCar1 object and myCar2 object both have the same keys / properties, so the last one in the .assign() arguments will override the values of the previous one(s) only for the same keys / properties.</p>");
+        for (const key in myCars1) {
+            document.write(`<br>${key}: ${myCars1[key]}`);
+        };
+
+        // Using the ES6 Spread Operator "..." to combine the 2 objects into one also:
+        /*
+        const myCars2Console = { ...myCar1, ...myCar2 }
+        console.log(myCars2Console); // {brand: 'Subaru', model: 'Crosscheck', color: 'brown', year: 2023}
+        */
+
+        // Let's do it with document.write:
+        const myCars2 = { ...myCar1, ...myCar2 };
+        document.write("<h2>My Cars (myCar1+myCar2) object keys/values:</h2>");
+        for (const key in myCars2) {
+            document.write(`<br>${key}: ${myCars2[key]}`);
+        };
+
+    </script>
+</body>
+
+</html>
