@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iterating with the for/of loop</title>
+</head>
+
+<body>
+    <script>
+        /*
+            for...of:
+            The for...of statement creates a loop iterating over iterable objects, including: 
+            - built-in String
+            - Array
+            - array-like objects (e.g., arguments or NodeList)
+            - TypedArray
+            - Map
+            - Set
+            - and user-defined iterables. 
+            It invokes a custom iteration hook with statements to be executed for the value of each distinct property of the object.
+
+            Link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of
+        */
+
+        // looping through a string:
+        let index = 0;
+        document.write("Our string is 'ECMAScript6'. <ul>");
+        for (let letter of "ECMAScript6") {
+            document.write(`<li>Index ${index}: ${letter}</li>`);
+            index++;
+        }
+        document.write("</ul>");
+
+        // With Arrays:   
+        let instruments = ["Piano", "Guitar", "Bass", "Drums", "Violin"];
+        document.write("<h2>Our Instruments</h2><ol>");
+        for (let inst of instruments) {
+            document.write(`<li>${inst}</li>`);
+        }
+        document.write("</ol>");
+
+        // With Maps:
+        /*
+            The Map object holds key-value pairs and remembers the original insertion order of the keys. 
+            Any value (both objects and primitive values) may be used as either a key or a value.
+
+            Map objects are collections of key-value pairs. A key in the Map may only occur once; 
+            it is unique in the Map's collection. A Map object is iterated by key-value pairs — a for...of loop 
+
+            Link: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
+        */
+        let languages = new Map();
+        // Map.set() method is used to enter elements to the Map
+        // Short Languages Definitions Ref: Wikipedia
+        languages.set("JavaScript", "Is one of the core technologies of the World Wide Web, alongside HTML and CSS");
+        languages.set("Python", "Is a high-level, interpreted, general-purpose programming language");
+        languages.set("PHP", "Is a general-purpose scripting language geared toward web development");
+        languages.set("C#", "Is a general-purpose, multi-paradigm programming language");
+        languages.set("Java", "Is a high-level, class-based, object-oriented programming language that is designed to have as few implementation dependencies as possible");
+
+        // For..of loop with MAP(): (This will not be nicely formatted!)
+        document.write("<h2>Programming Languages</h2><ul>");
+        for (let lang of languages) {
+            document.write(`<li>${lang}</li>`);
+        }
+        document.write("</ul>");
+
+        // Below will be in better formatting:
+        // We can use the array syntax to target the key/values of a MAP object:
+        // index 0 will be the key and index 1 will be its value
+        document.write("<h2>Programming Languages</h2><dl>");
+        for (let lang of languages) {
+            // Put them in two lines just for clarity:
+            document.write(`<dt>${lang[0]}:</dt>`);
+            document.write(`<dd>${lang[1]}</dd>`);
+        }
+        document.write("</dl>");
+
+        // Or we can use the .keys() method to get the keys only:
+        document.write("<h2>Programming Languages</h2><ol>");
+        for (let lang of languages.keys()) {
+            document.write(`<li>${lang}</li>`);
+        }
+        document.write("</ol>");
+
+        // Or we can use the .values() method to get the values only (which is the definition of each language):
+        document.write("<h2>Definition Of The Above Programming Languages</h2><ol>");
+        for (let def of languages.values()) {
+            document.write(`<li>${def}</li>`);
+        }
+        document.write("</ol>");
+
+        /*
+        Or for looping through a MAP an taking its key/value pairs, we can use .entries() method
+        
+        Example:
+        for (const [key, value] of myMap.entries()) {
+            console.log(key + ' = ' + value)
+        }
+
+        Link: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map#iterating_map_with_for..of
+        */
+        document.write("<h2>Programming Languages</h2><dl>");
+        for (let [key, value] of languages.entries()) {
+            document.write(`<dt>${key}:</dt><dd>${value}</dd>`);
+        }
+        document.write("</dl>");
+    </script>
+</body>
+
+</html>

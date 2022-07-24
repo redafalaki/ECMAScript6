@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object Destructing</title>
+</head>
+
+<body>
+    <script>
+        /*
+            Object destructuring: is used to assigning to new variable names
+            A property can be unpacked from an object and assigned to a variable 
+            with a different name than the object property.
+            Link: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#object_destructuring
+        */
+
+        // Quick recap about what we do in JavaScript before ES6:
+        // let's create an object literal:
+        let employee = {
+            name: 'Alex Chow',
+            title: 'Instructor',
+            dob: '1974-02-05',
+            gender: 'Male',
+            department: 'Continuing Studies',
+            campuses: ['Toronto', 'Markham'],
+            edu: {
+                topic: 'Software Development',
+                level: 'College Certificate',
+                college: 'Centennial College',
+                year: '2018'
+            },
+            contact: {
+                cellPhone: "(416) 123-1234",
+                homePhone: "(905) 123-4321",
+                email: "alexchow@learningjavascript.com"
+            }
+        }
+
+        // to access each value of this object we use:
+        let fullName = employee.name;
+        let jobTitle = employee.title;
+        let campus1 = employee.campuses[0];
+        let education = employee.edu.level;
+        let subject = employee.edu.topic;
+
+        document.write(`<p>${fullName} is our new ${jobTitle}. He has a ${education} in ${subject}. This semester, he will be working at ${campus1} campus.</p>`);
+
+        // Let's try to use the "Destructuring" feature of ES6:
+        // repeat the same output from the above with different solution:
+        /*
+        1. Since we need to destruct these values from an object,
+        so we need to use curly braces {}
+        Remember with arrays we used square brackets [] to destruct array values
+
+        2. Inside the {}, we need to list/specify the list of our new variables
+        to assign to them the new values from our object "employee"
+
+        IMPORTANT NOTES:
+        1. Please be advised that the variable names that we will list in between {}
+        must match it's corresponding properties names in our object. 
+        Unless we do prefer/want to use different names then keep reading in this file :-)
+
+        For example: to get or to assign the value of the property "topic" into a new variable,
+        this variable name has to be named also "topic".
+
+        If you noticed in the previous code we wrote: 
+        let education = employee.edu.level;
+        so we are assigning the value of "level" to a variable named "eduction"
+        But this is not the case with Object Destructing
+
+        2. The order of the elements has no effect, and skipping elements with commas ,, 
+        as we did before with array also has no effect with object.
+        so we don't need to list the variable in the same order of the properties objects,
+        and we don't need to skip unwanted properties by adding commas ,,
+        */
+
+        // Let's start with the simple key/value properties:
+        let { name, title, department, campuses, } = employee;
+        document.write(`<p>${fullName} is our new ${jobTitle}. He us in ${department} department.  This semester, he will be working at ${campuses[0]} campus.</p>`);
+
+        // Q) What if we want to use different names!
+        // The solution is we need to use something called alias names:
+        // The syntax: propertyName : variableName
+        /* 
+        Notice that:
+        - we still need to reference the object property that we want to use even with alias names
+        - we put a varaible named "address" that doesn't have a matching property!
+        in such case, JS will not though an error, it will just give it a value of "undefined"
+        - we put a variable named "hobby" that doesn't have a matching property also! 
+        but we can give it a default value of "Music". 
+        So we can give a default value to any varaible and this value will only be used if there is no matching
+        */
+        let { name: givenName, dob: birthDate, gender, address, hobby = "music" } = employee;
+        document.write(`<p>${givenName} was born in ${birthDate}. He is a ${gender}. He likes ${hobby}.</p>`);
+        document.write(`<p>Address: ${address}</p>`); // Address: undefined
+
+        /*
+        What if we want to distrust the "employee" object property named "edu" which is a nested object:
+        edu: {
+            topic: 'Software Development',
+            level: 'College Certificate',
+            college: 'Centennial College',
+            year: '2018'
+        }
+        */
+        let { edu } = employee;
+        document.write(`<p>${name} has a ${edu.level} in ${edu.topic} from ${edu.college} in ${edu.year}.</p>`);
+
+        /*
+        Or we can use the same technique of object distrusting:
+        Notice in this way/solution:
+        - we can specify the property that we want to use instead of taking them all
+        - we still need to match the variable name with the property name
+        - we can access the inner property of the nested object directly 
+        */
+        let { contact: { cellPhone, email } } = employee;
+        // No need for contact.cellPhone => just cellPhone
+        // No need for contact.email => just email
+        document.write(`<p>You can contact ${name} through his email ${email}, or call him directly to his cell phone number: ${cellPhone}.</p>`);
+
+        // ****************
+        // More Examples :-)
+        // ****************
+
+        // Yes, we can do destructuring directly:
+        const { make, brand, year, price } = {
+            make: "Toyota",
+            brand: "Corolla",
+            model: "Sedan",
+            color: "white",
+            milage: 123000.00,
+            year: 2015,
+            price: 15000
+        }
+        document.write(`<br>${make} - ${brand} - ${year}`);
+
+        // Let's convert/assign the above example into an object varaible
+        const carForSale = {
+            make: "Toyota",
+            brand: "Corolla",
+            model: "Sedan",
+            color: "white",
+            milage: 123000.00,
+            year: 2015,
+            price: 15000
+        }
+
+        // Creating a function for selling the car:
+        // We only need the brand, model, year, and price
+        function sellCar({ brand, model, year, price }) {
+            return `<p>This ${brand} ${model} ${year} is for sale. Price is ${price} and it's negotiable!</p>`;
+        }
+
+        document.write(`${sellCar(carForSale)}`);
+    </script>
+</body>
+
+</html>

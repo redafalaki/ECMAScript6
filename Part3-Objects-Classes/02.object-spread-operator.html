@@ -39,19 +39,24 @@
         HINT: We CANNOT use the following tools/code as they work with Arrays only:
 
         Wrong Solution#1:  TypeError: empInfo.forEach is not a function:
+        Reason: It works with arrays ONLY not object literal
         empInfo.forEach(element => {
             console.log(element);
         });
 
         Wrong Solution#2: TypeError: empInfo.map is not a function:
+        Reason: It works with arrays ONLY not object literal
         empInfo.map(element => {})
 
         Wrong Solution#3: TypeError: TypeError: items are not iterable:
+        Reason: It works with arrays ONLY not object literal
         for (const element of empInfo) {}
 
-        Right Solution: Using For...in Loop:
+        Finally, one of the right solution to iterate through an object literal is to use For...in Loop:
+        Please notice that there will be another type of loops (for...of) 
+        and it will be discussed in more details later in this repo
 
-        Syntax:
+        For...in Syntax:
         for (const variable in object) {
             statement
         }

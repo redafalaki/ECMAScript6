@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classes Introduction</title>
+</head>
+
+<body>
+    <script>
+        /*
+        Classes:
+        Classes are a template for creating objects. 
+        They encapsulate data with code to work on that data. 
+        Classes in JS are built on prototypes but also have some syntax and semantics 
+        that are not shared with ES5 class-like semantics.
+        Link: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
+
+        ECMAScript 2015 (ES6) introduced JavaScript Classes.
+        JavaScript Classes are templates for JavaScript Objects.
+
+        NOTE ABOUT "Hoisting":
+        An important difference between function declarations and class declarations:
+        - functions can be called in code that appears before they are defined
+        - classes must be defined before they can be constructed, otherwise code will throw a "ReferenceError"
+
+        HINTS: 
+        - Hoisting: JavaScript Hoisting refers to the process whereby 
+        the interpreter appears to move the declaration of functions, variables or classes 
+        to the top of their scope, prior to execution of the code.
+        Link: https://developer.mozilla.org/en-US/docs/Glossary/Hoisting
+        - Please refer to my JavaScript repo for more details about using classes
+        */
+
+        // Starting with Capital letter by convention
+        /*
+        A JavaScript class is not an object itself,
+        But it is a template (blue print) for JavaScript objects.
+        This class will be a blue print for a useable object that we are going to create later...
+        */
+        class Car {
+            // Always add a method named constructor():
+            /*
+            constructor() is like a class built-in function that are triggered/called
+            when we instantiate an object from this class.
+            that's why it can be used to set the initial properties of the class if needed
+
+            Notice that if you do not define a constructor method, JavaScript will add an empty constructor method.
+            */
+            constructor(brand, type, description, wheels, owner) {
+                /*
+                The properties of a class = the variables we are passing to the class
+                with class properties:
+                - We use the keyword "this" that refer to the current object of the class
+                - We DO NOT use "const", "let", or "var"
+
+                The class has five initial properties: "brand", "type", "description","wheels", and "owner".
+                */
+                this.brand = brand;
+                this.type = type;
+                this.description = description;
+                this.wheels = wheels;
+                this.owner = owner;
+            }
+
+            /*
+            Methods:
+            Class can have functions, functions are called "methods" when we create them inside a class.
+            We don't use the keyword "function" when we create them
+            */
+            describeCar() {
+                // Don't forget to use the keyword "this" to access any property of a class
+                /*
+                If you forget to add the keyword "this", for example wheel instead of this.wheel
+                JS will will trow this error: 
+                Uncaught ReferenceError: wheel is not defined
+                */
+                document.write(`${this.owner} has ${this.type}. It's ${this.wheel}-wheel drive. This car is ${this.description}`);
+            }
+        } // End class Car
+
+        // Creating a new instance (object) of a Car Class:
+        /*
+        When we create a new object, we have to follow the constructor function signiture,
+        which means we should pass the needed values to all the constructor parameters,
+        If we don't pass any value so why we have these parameter in the constructor,
+        or why we added our custom constructor if we have no intention to pass any value to the class object?
+        */
+        let testCar = new Car();
+        console.log(testCar);
+        /*
+        As we didn't pass any value, so all object properties will be "undefined":
+        Car {description: undefined, wheels: undefined, owner: undefined}
+        description: undefined
+        owner: undefined
+        wheels: undefined
+        [[Prototype]]: Object
+        */
+
+        // Our constructor expecting these values with the same order: brand, type, description, wheels, owner
+        let firstCar = new Car("Toyota", "Sedan", "Good condition with 1 year warranty", 4, "Alex Chow");
+
+        console.log(firstCar);
+        /*
+            brand: "Toyota"
+            description: "Good condition with 1 year warranty"
+            owner: "Alex Chow"
+            type: "Sedan"
+            wheels: 4
+            [[Prototype]]: Object
+        */
+
+        firstCar.describeCar();
+
+        // Creating another instance/object from our class "Car":
+        /*
+            Notice that I am using "let" keyword to declare a variable,
+            but it's recommended to use "const" keyword if you have no intention to change its value later
+        */
+        const secondCar = new Car("Nissan", "SUV", "Demo Version", 4, "Martin Smith");
+        document.write(`<p>${secondCar.owner} is selling his ${secondCar.type} ${secondCar.brand} ${secondCar.wheels}-wheel drive car. It's still in ${secondCar.description}!</p>`);
+
+
+        // Another Example from MDN with more...:
+        class Rectangle {
+            /*
+                The constructor method is a special method 
+                for creating and initializing an object created with a class.
+
+                passing h for height and w for width
+            */
+            constructor(h, w) {
+                this.height = h;
+                this.width = w;
+            }
+
+            // Method:
+            // Creating our custom method (In-Class Function) to return the area of a rectangle:
+            /*
+            We can name it calcArea for "Calculate Area"
+            Notes:
+            - No need to pass any parameters for the width and height
+            as this method will use the class properties (width and height) that we already set 
+            inside the constructor method 
+            - Don't forget to use "this" keyword with the class properties
+            */
+            calcArea() {
+                return this.height * this.width;
+            }
+
+            /*
+            JavaScript Accessors (Getters and Setters):
+            ECMAScript 5 (ES5-2009) introduced Getter and Setters.
+            Getters and setters allow you to define Object Accessors (Computed Properties). 
+
+            - getter: The get syntax binds an object property 
+            to a function that will be called when that property is looked up.
+            - setter: The set syntax binds an object property 
+            to a function to be called when there is an attempt to set that property.
+
+            NOTE: Please be advised that "this" keyword is required to access class methods also
+            */
+
+            // Getter: for getting the value of the rectangle area:
+            /*
+            IMPORTANT NOTE:
+            Please notice that even "area()" is the getter method,
+            we don't use parentheses when we want to get the property value
+            */
+            get area() {
+                return this.calcArea();
+            }
+
+            // Setter: for setting a value for any class property
+            set setHeight(h) {
+                this.height = h;
+            }
+
+            set setWidth(w) {
+                this.width = w;
+            }
+        } // End class Rectangle
+
+        // creating a new instance:
+        const rec1 = new Rectangle(10, 20);
+        // Since we can access calcArea() so we can use it:
+        document.write(`<p>The area of the first rectangle is ${rec1.calcArea()}</p>`);
+        // The area of the first rectangle is 200
+
+        // Override the rectangle properties values for width and height:
+        rec1.setHeight = 12;
+        rec1.setWidth = 7;
+        document.write(`<p>The new area of the first rectangle after changing its width and height is ${rec1.calcArea()}</p>`);
+
+        // Or with using the getter:
+        // This code will throw an error as we cannot use () with get methods:
+        // Uncaught TypeError: rec1.area is not a function
+        // let recArea = rec1.area();
+
+        // We have to use the getter method without ()
+        let recArea = rec1.area;
+        document.write(`<p>The new area of the first rectangle after changing its width and height is ${recArea}</p>`);
+    </script>
+</body>
+
+</html>
