@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+
+<body>
+    <script>
+        /*
+        Generators:
+        - are functions that we can use for controlling the iterator
+        - Allow us to pause the execution of a function to be used later
+        - For creating a generator, we use a particular syntax construct: 
+        function* functionName...
+        this is known as a generator function.
+        - There is a unique "yield" operator inside generators. 
+        The yield keyword is used to pause and resume a generator function
+        -yield can only be called directly from the generator function that contains it. It cannot be called from nested functions or from callbacks
+
+        The function* declaration (function keyword followed by an asterisk) 
+        defines a generator function, which returns a Generator object.
+        Link: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*
+
+        Link:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/yield
+        */
+
+        function* sing() {
+            /*
+            When we call this function it stop will here because of "yield"
+            so we need to use .next() method to continue...
+            */
+            yield "Do";
+            yield "Re";
+            yield "Mi";
+            yield "Fa";
+            yield "Sol";
+            yield "La";
+            yield "Ti";
+        }
+
+        /*
+        We run the generator function with .next() method
+        this method returns an object that contains two property:
+        done: 
+        value:
+
+        so the value will be the value of yield
+        and done will be "false" until all the yield statements are done
+        then it will be true
+        */
+
+        let singNote = sing(); // Generator { }
+
+        // Below the function will be suspended/pending => missing .next()
+        console.log(singNote); // sing {<suspended>}
+
+        console.log(singNote.next());
+        /*
+        done: false
+        value: "Do"
+        */
+
+        console.log(singNote.next());
+        /*
+        done: false
+        value: "Re"
+        */
+
+        console.log(singNote.next());
+        /*
+        done: false
+        value: "Mi"
+        */
+
+        console.log(singNote.next());
+        /*
+        done: false
+        value: "Fa"
+        */
+
+        console.log(singNote.next());
+        /*
+        done: false
+        value: "Sol"
+        */
+
+        console.log(singNote.next());
+        /*
+        done: false
+        value: "La"
+        */
+
+        console.log(singNote.next());
+        /*
+        done: false
+        value: "Ti"
+        */
+
+        console.log(singNote.next());
+        /*
+        done: true
+        value: "undefined"
+        */
+
+        // Example with loop:
+        function* countDown(count) {
+            while (count > 0) {
+                yield count;
+                count--;
+            }
+        }
+
+        const countNumber = countDown(5);
+
+        // We can chain on the value property of object that is returned by yield
+        // using .value after .next()
+        console.log(countNumber.next().value); // 5
+        console.log(countNumber.next().value); // 4
+        console.log(countNumber.next().value); // 3
+        console.log(countNumber.next().value); // 2
+        console.log(countNumber.next().value); // 1
+        console.log(countNumber.next().value); // undefined
+    </script>
+</body>
+
+</html>

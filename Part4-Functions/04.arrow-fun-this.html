@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nested This Keyword in Arrow Function</title>
+</head>
+
+<body>
+    <script>
+        /*
+        Arrow functions can make the code more readable pluse make the use of "this" keyword,
+        It helps us to deal with the scope of "this" keyword.
+
+        Let's take the same example of the object "employee" that we built before
+        and modify (simplify) it for the purpose of this topic:
+        */
+        let employee = {
+            name: 'Alex Chow',
+            title: 'Instructor',
+            department: 'Continuing Studies',
+            campuses: ['Toronto', 'Markham'],
+            courses: [
+                "HTML and CSS Fundamentals",
+                "Advanced Web Development",
+                "Python Programming",
+                "Introduction to Databases"
+            ],
+            contact: {
+                cellPhone: "(416) 123-1234",
+                homePhone: "(905) 123-4321",
+                email: "alexchow@learningjavascript.com"
+            },
+            // Modifying the original object by adding this simple method "canTeachList":
+            canTeachList: function () {
+                // Notice the use of "this" keyword:
+                document.write(`<p>What can ${this.name} teach?</p>`);
+
+                // For testing:
+                console.log(this.courses);
+
+                let courseList = "<ul>";
+                this.courses.forEach(function (course) {
+                    // Notice the use of "this" keyword inside this nested level/block:
+                    // For testing:
+                    console.log(this.name); // undefined
+                    console.log(this.title); // undefined
+                    /*
+                    Problem:
+                    We might expect to access the properties:
+                    - "name" using "this" keyword that refers to this object's name property => Alex Chow
+                    - "title" using "this" keyword that refers to this object's title property => Instructor
+                    
+                    But it did not work!
+                    - this.name was "undefined" in the output testing using console.log
+                    - this.title was "undefined" in the output testing using console.log           
+
+                    Solution1:
+                    Creating another local/function variable to get/save the value of "this"
+                    
+                    Solution2:
+                    A simple solution to fix this issue is to use ES6 type of functions => Arrow Function
+                    */
+                    courseList += "<li>" + this.name + " can teach " + course + "</li>";
+                });
+                courseList += "</ul>";
+
+                document.write(courseList);
+                /*
+                Due to the same problem above, we will not see the name printed:
+                can teach HTML and CSS Fundamentals
+                can teach Advanced Web Development
+                can teach Python Programming
+                can teach Introduction to Databases
+                */
+            },
+
+            // Solution1: Let's fix the problem by adding this method "canTeachCourses"
+            canTeachCourses: function () {
+                // Notice the use of "this" keyword:
+                document.write(`<p>What can ${this.name} teach?</p>`);
+
+                // For testing:
+                console.log(this.courses);
+
+                let courseList = "<ul>";
+                // Adding these two local variables "_name" and "_title" to scope "this":
+                let _name = this.name;
+                let _title = this.title;
+                /*
+                    NOTE:
+                    using/adding underscore before a variable name it is intended to be private by naming convention
+                */
+                this.courses.forEach(function (course) {
+                    // Notice the use of "this" keyword inside this nested level/block:
+                    // For testing:
+                    console.log(_name); // Alex Chow
+                    console.log(_title); // Instructor
+                    courseList += "<li>" + _name + " can teach " + course + "</li>";
+                });
+                courseList += "</ul>";
+
+                document.write(courseList);
+                /*
+                Alex Chow can teach HTML and CSS Fundamentals
+                Alex Chow can teach Advanced Web Development
+                Alex Chow can teach Python Programming
+                Alex Chow can teach Introduction to Databases
+                */
+            },
+
+            // Solution2: Let's fix the problem by adding this method "canTeachSubjects"
+            canTeachSubjects: function () {
+                // Notice the use of "this" keyword:
+                document.write(`<p>What can ${this.name} teach?</p>`);
+
+                // For testing:
+                console.log(this.courses);
+
+                let courseList = "<ul>";
+                // Using Arrow Function:
+                this.courses.forEach((course) => {
+                    // Notice the use of "this" keyword inside this nested level/block:
+                    // For testing:
+                    console.log(this.name); // Alex Chow
+                    console.log(this.title); // Instructor
+                    courseList += "<li>" + this.name + " can teach " + course + "</li>";
+                });
+                courseList += "</ul>";
+
+                document.write(courseList);
+                /*
+                Alex Chow can teach HTML and CSS Fundamentals
+                Alex Chow can teach Advanced Web Development
+                Alex Chow can teach Python Programming
+                Alex Chow can teach Introduction to Databases
+                */
+            }
+        }
+
+        employee.canTeachList();
+
+        employee.canTeachCourses();
+
+        employee.canTeachSubjects();
+    </script>
+</body>
+
+</html>

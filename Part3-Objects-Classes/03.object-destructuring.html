@@ -26,6 +26,12 @@
             gender: 'Male',
             department: 'Continuing Studies',
             campuses: ['Toronto', 'Markham'],
+            courses: [
+                "HTML and CSS Fundamentals",
+                "Advanced Web Development",
+                "Python Programming",
+                "Introduction to Databases"
+            ],
             edu: {
                 topic: 'Software Development',
                 level: 'College Certificate',
@@ -36,6 +42,26 @@
                 cellPhone: "(416) 123-1234",
                 homePhone: "(905) 123-4321",
                 email: "alexchow@learningjavascript.com"
+            },
+            // Adding the following method:
+            showWorkInfo: function () {
+                // Print/output the employee contact information
+                document.write(`<h3>Employee Name: ${this.name}</h3>`);
+                document.write(`<h4>Job Title: ${this.title}</h4>`);
+                // Getting his "courses" property value:
+                document.write(`<h4>Courses:</h4>`);
+                /*
+                the property "courses" is an array, so we can use .forEach() method:
+                The forEach() method executes a provided function once for each array element.
+                Link: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach
+                */
+                let courseList = "<ul>";
+                console.log(this.courses);
+                this.courses.forEach(function (course) {
+                    courseList += "<li>" + course + "</li>";
+                });
+                courseList += "</ul>";
+                document.write(courseList);
             }
         }
 
@@ -45,6 +71,8 @@
         let campus1 = employee.campuses[0];
         let education = employee.edu.level;
         let subject = employee.edu.topic;
+
+        employee.showWorkInfo(); // calling .showWorkInfo() method
 
         document.write(`<p>${fullName} is our new ${jobTitle}. He has a ${education} in ${subject}. This semester, he will be working at ${campus1} campus.</p>`);
 

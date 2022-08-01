@@ -36,6 +36,8 @@
                 if (this.brand == 'Honda') {
                     return this.brand;
                 } else {
+                    // return `Sorry, we don't sell ${this.brand}. `;
+                    // Or the classical way:
                     return "Sorry, we don't sell " + this.brand + ".";
                 }
             },
@@ -76,7 +78,11 @@
         console.log(car.brand); // Toyota
         console.log(car.year); // 2020
         console.log(car.model); // SXT
-        console.log(car.buyCar()); // Sorry, we don't sell undefined.
+        /*
+        Please consider the code below:
+        calling the .buyCar() method => returns: Sorry, we don't sell undefined
+        */
+        console.log(car.buyCar()); // Sorry, we don't sell Toyota.
         /*
         IMPORTANT NOTE:
         Although property "check" has the value of a function "checkCar()" 
@@ -102,7 +108,7 @@
                 song: song,
                 singingLoud: function () {
                     let singing = this.song.toUpperCase();
-                    console.log(`${this.name} is singing "${singing}" loudly and with enthusiasm!`)
+                    console.log(`${this.name} is singing "${singing}" loudly and with enthusiasm!`);
                 }
             }
         }
@@ -130,8 +136,14 @@
                 name,
                 dance,
                 dancingFast: function () {
+                    // Either by creating a variable then pass the variable to the console.log:
+                    /*
                     let dancing = this.dance.toUpperCase();
-                    console.log(`${this.name} is dancing "${dancing}" fast and with enthusiasm!`)
+                    console.log(`${this.name} is dancing "${dancing}" fast and with enthusiasm!`);
+                    */
+
+                    // OR:
+                    console.log(`${this.name} is dancing "${this.dance.toUpperCase()}" fast and with enthusiasm!`);
                 }
             }
         }
