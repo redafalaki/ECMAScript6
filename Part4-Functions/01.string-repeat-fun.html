@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>String Repeat Method</title>
+</head>
+
+<body>
+    <script>
+        /*
+        .repeat() string method: 
+        constructs and returns a new string which contains 
+        the specified number of copies of the string on which it was called,
+        concatenated together.
+
+        - Returns a string with a number of copies of a string
+        - Returns a new string
+        - Does not change the original string
+        */
+        let str1 = 'abc'.repeat(0);
+        console.log("str1: ", str1); // str1: ''
+
+        let str2 = 'abc'.repeat(1);
+        console.log("str2: ", str2); // str2:  abc
+
+        let str3 = 'abc'.repeat(2);
+        console.log("str3: ", str3); // str3:  abcabc
+
+        let str4 = 'abc'.repeat(3);
+        console.log("str4: ", str4); // str4:  abcabcabc
+
+        // In the following line the count is 3.5 => will be converted to integer => 3
+        let str5 = 'abc'.repeat(3.5);
+        console.log("str5: ", str5); // str5:  abcabcabc
+
+        // RangeError:
+        // let str6 = 'abc'.repeat(-1); // Uncaught RangeError: Invalid count value: -1
+        // console.log(str6);
+
+        // RangeError:
+        // 'abc'.repeat(1 / 0); // Uncaught RangeError: Invalid count value: Infinity
+
+        // using .repeat() within object method:
+        let car = {
+            beeping(times) {
+                console.log("Beep! ".repeat(times));
+            }
+        }
+
+        car.beeping(5); // Beep! Beep! Beep! Beep! Beep!
+    </script>
+</body>
+
+</html>

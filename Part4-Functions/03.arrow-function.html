@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arrow Function Expressions</title>
+</head>
+
+<body>
+    <script>
+        /*
+        An arrow function expression is a compact alternative to a traditional function expression,
+        but is limited and can't be used in all situations.
+
+        using the "=>"
+        */
+        // Task: Create a function to accept any number then output even or odd message based on the number
+
+        // The traditional ways to create functions
+
+        // Way#1:
+        function testEvenOddTry1(number) {
+            if (number % 2 == 0) {
+                document.write(`<p>Your number is ${number}, and it is even.</p>`);
+            } else {
+                document.write(`<p>Your number is ${number}, and it is odd.</p>`);
+            }
+        }
+
+        testEvenOddTry1(7);
+        testEvenOddTry1(16);
+        testEvenOddTry1(8);
+
+        // Way#2:
+        let testEvenOddTry2 = function (number) {
+            if (number % 2 == 0) {
+                document.write(`<p>Your number is ${number}, and it is even.</p>`);
+            } else {
+                document.write(`<p>Your number is ${number}, and it is odd.</p>`);
+            }
+        }
+        testEvenOddTry2(72);
+        testEvenOddTry2(22);
+        testEvenOddTry2(35);
+
+        // The new way of ES6 (2015):
+        let testEvenOddTry3 = (number) => {
+            if (number % 2 == 0) {
+                document.write(`<p>Your number is ${number}, and it is even.</p>`);
+            } else {
+                document.write(`<p>Your number is ${number}, and it is odd.</p>`);
+            }
+        }
+        testEvenOddTry2(100);
+        testEvenOddTry2(175);
+        testEvenOddTry2(135);
+
+        // No! The following code will not work:
+        (number) => {
+            if (number % 2 == 0) {
+                document.write(`<p>Your number is ${number}, and it is even.</p>`);
+            } else {
+                document.write(`<p>Your number is ${number}, and it is odd.</p>`);
+            }
+        }
+
+        // Creating a function for finding the total of numbers in an array:
+        let numTotal1 = function (tempArray) {
+            let total = 0;
+            for (let i = 0; i < tempArray.length; i++) {
+                total += tempArray[i];
+            }
+            return total;
+        }
+
+        let myLuckNumbers = [8, 9, 5, 3, 1, 7];
+        document.write(`<p>Total of "${myLuckNumbers}" is: ${numTotal1(myLuckNumbers)}</p>`); // Total of "8,9,5,3,1,7" is: 33
+
+        // The same but with arrow array:
+        let numTotal2 = (tempArray) => {
+            let total = 0;
+            for (let i = 0; i < tempArray.length; i++) {
+                total += tempArray[i];
+            }
+            return total;
+        }
+
+        let exams = [88, 92, 95, 93, 91, 87];
+        document.write(`<p>Total of "${exams}" is: ${numTotal2(exams)}</p>`); // Total of "88,92,95,93,91,87" is: 546
+
+        // Or passing the values as literal array:
+        document.write(`<p>Total of "100, 200, 300" is: ${numTotal2([100, 200, 300])}</p>`); // Total of "100, 200, 300" is: 600
+
+        /*
+        Working with .map()
+        NOTE: The first part of following code examples and comment for the .map() method
+        were taken from my full tutorial repo about JavaScript
+        */
+
+        // map() Array Method:
+        /*
+        The map method transforms an array by applying a function
+        to all of its elements and building a new array from the returned values.
+        The new array will have the same length as the input array,
+        but its content will have been mapped to a new form by the function.
+        */
+
+        /*
+        Using .map() method of the array object:
+        
+        arrayName.map(our function)
+        arrayName.map(function(){
+        });
+        */
+
+        /*
+        Example 1: 
+        Return an array (Generate an new array) with the "square root" of all the values in the original array:
+        */
+        let manyNumbers = [4, 9, 16, 25]; // our original array
+        console.log("manyNumbers", manyNumbers);
+        /*
+        Using Math objet with its method  Math.sqrt()
+        Math.sqrt(value)
+        */
+
+        console.log(Math.sqrt(16)); // 4
+
+        // The solution using our normal way that we have learned before:
+        // the idea is to get manyNumbers=[2,3,4,5]
+
+        console.log(manyNumbers);
+        // We need to declare our new array before starting putting any value inside it
+        var sqrtNumbers1 = [];  // declare an empty array => our new array
+        // Now we can use all the methods/properties that comes with the array:
+        for (let i = 0; i < manyNumbers.length; i++) {
+            // Nested methods:
+            // Using this method of Array object named "push()"
+            // Using this method of Math object named "sqrt()"
+            // (method) Math.sqrt(x: number): number
+            sqrtNumbers1.push(Math.sqrt(manyNumbers[i]));
+            // Or:
+            // sqrtNumbers1[i] = Math.sqrt(manyNumbers[i]);
+        }
+
+        // for testing
+        console.log("sqrtNumbers1", sqrtNumbers1); // array => [2,3,4,5]
+
+        // The solution using .map() array method
+        /*
+            arrayName.map( using any built-in JS method(function) or our custom anonymous function or calling our function)
+            arrayName.map ( function() {
+                // writing my own code
+                // this code will target all the elements in the array
+            })
+        */
+        let sqrtNumbers2 = manyNumbers.map(function (number) {
+            return Math.sqrt(number);
+        });
+
+        // for testing
+        console.log("sqrtNumbers2", sqrtNumbers2); // array => [2,3,4,5] 
+
+        // Or using .map() method with arrow function:
+        let sqrtNumbers3 = manyNumbers.map((number) => {
+            return Math.sqrt(number);
+        });
+
+        // for testing
+        console.log("sqrtNumbers3", sqrtNumbers3); // array => [2,3,4,5] 
+
+
+        // Now, let's return to our example of finding total of numbers in an array, but using .map() this time:
+        let myGameScores = [100, 90, 88, 97];
+        // .map() array method:
+
+        let total = 0;
+        // Now below we don't want to generate a new array! Just finding the total is all what we need :-)
+        myGameScores.map((number) => {
+            total += number;
+        });
+        document.write(`<p>Total of "${myGameScores}" is: ${total}</p>`); // Total of "100,90,88,97" is: 375
+    </script>
+</body>
+
+</html>

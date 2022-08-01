@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Default Parameters Values</title>
+</head>
+
+<body>
+    <script>
+        /*
+        Default parameters with functions:
+        x will get the value of 10 if no value is being passed
+        y will get the value of 7 if no value is being passed
+
+        */
+        function add(x = 10, y = 7) {
+            console.log(x + y);
+        }
+
+        let total1 = add();
+        console.log(total1);
+        // Or directly:
+        console.log(add());
+
+        let total2 = add(3, 2);
+        console.log(total2);
+        // Or:
+        console.log(add(3, 2));
+
+        function study(subjectName = "Python Programming", hours = 8, period = "per week") {
+            console.log(`I will be studying ${subjectName} for ${hours} hours ${period}.`)
+        }
+
+        // Nothing to pass, JS will use the default values
+        study(); // I will be studying Python Programming for 8 hours per week.
+
+        // Passing the right number and data types of parameters
+        study("C# Programming", 2, "per day"); // I will be studying C# Programming for 2 hours per day.
+
+        // Passing only one value as the first one in the function order
+        study("PHP Programming"); // I will be studying PHP Programming for 8 hours per week.
+
+        /*
+        We need to be aware about how to order the passing values 
+        Look at the funny examples below :-)
+        */
+        // Passing only one value for the second parameter "hours"!
+        // JS will just use it for the first parameter
+        study(8); // I will be studying 8 for 8 hours per week.
+
+        // Passing two values for the last two parameters, again JS will just place them based on the parameter order
+        study(24, "per month"); // I will be studying 24 for per month hours per week.
+    </script>
+</body>
+
+</html>
