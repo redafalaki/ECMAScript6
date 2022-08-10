@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fetch() with Async/Wait</title>
+</head>
+
+<body>
+    <script>
+        /*
+            Another example of using async/await with fetch()
+
+            creating a function "getGithubUser" to get the name of a Github user
+
+            Based on Github documentation, the API link to get info any user is:
+            https://api.github.com/usres/[YourUsername]
+        */
+
+        const getGithubUser = async (login) => {
+            // Using await to await the result of a fetch
+            let response = await fetch(`https://api.github.com/users/${login}`);
+
+            // Testing:
+            console.log("Original Response Format: ", response);
+            /*
+            With fetch(), we need to convert the response to JSON format
+            so we can parse the result
+            */
+            let json = await response.json();
+
+            // Testing:
+            console.log("JSON Format: ", json);
+            /*
+            {login: 'anmarjarjees', id: 6352772, node_id: 'MDQ6VXNlcjYzNTI3NzI=', avatar_url: 'https://avatars.githubusercontent.com/u/6352772?v=4', gravatar_id: '', …}
+            */
+
+            /*
+            Formatting the data that we want to get from the JSON result
+            */
+            let userInfo = `${json.name}, ${json.bio}`
+
+            console.log("User Information: ", userInfo);
+        }
+
+        getGithubUser('anmarjarjees');
+
+    </script>
+</body>
+
+</html>

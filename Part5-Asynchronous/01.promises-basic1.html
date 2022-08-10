@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Using Promises 1</title>
+</head>
+
+<body>
+    <script>
+        /*
+        Promises in JS help us to work/deal with an asynchronous operation. 
+        Asynchronous operation simply means some waiting to be done/finished,
+        so there is a delay between asking for something and getting the result (receive it)
+
+        Idea of Promises (Ref: Microsoft Developer Website)
+        The idea behind using promises was because of the delay to the time consuming for some certain operations to be finished like:
+        - Reading/Writing from a file system (File I/O)
+        - Making a REST calls (Fetching data using REST API Request)
+        - Calling some data from the database (Database Operations)
+        - Long running task (Complex Computations)
+
+        The problem is these long running operation (that may take a while) block execution of our app,
+        Because most application are what's called "Single Threaded" Application.
+        Single Threaded means:
+        - One task to be processed at time
+        - Other tasks cannot be run while the current active task is not finished yet
+        
+        So during the waiting time for finishing the current task:
+        - Uer interface or app could appear frozen
+        - No other task can execute
+        - Performance problems/issues
+
+        The logical solution:
+        - Is let the system work on finishing the task, and when it's done, call me back!
+        So JS imitates this idea to handle this delay
+        */
+
+        // Let's take this simple example to simulate the solution using simple setTimeout() method:
+
+        /*
+        setTimeout() Review: 
+        setTimeout() is a method of the "window" object like: window.alert() or window.confrim()
+        since "window" is a global object:
+        so we can just write/use setTimeout() instead of window.setTimeout().
+
+        setTimeout() Syntax:
+        https://developer.mozilla.org/en-US/docs/Web/API/setTimeout#syntax
+        most of the time, we will be using the following two syntax:
+        1- setTimeout(functionRef, delay):
+        setTimeout(ourCustomFunction, timeout);
+        
+        2- setTimeout(AnonymousFunction/ArrowFunction, delay):
+        setTimeout(() => {
+            
+        }, timeout);
+        */
+
+        // Creating a function named callback() to just simple output a message
+        function callback() {
+            // using console for quick test:
+            console.log('Time is completed for the current task after 3 seconds!');
+        }
+
+        // Since this task my take/need some time to finish let's say 3 seconds
+        // so JS should run the "callback()" function to display the message after 3 seconds
+        setTimeout(callback, 3000); // You will see the message in the console window after 3 seconds
+
+        // NOTE" A function/code to be executed after the timer expires.
+
+        // Now let's try using tha arrow function:
+        setTimeout(() => {
+            console.log('Good After 4 seconds of waiting, here is the result: everything is done perfectly!')
+        }, 4000); // 4000 MS = 4 Seconds
+
+        /*
+        When we have multiple tasks to finish using setTimeout() could become more complicated
+        And we can have multiple nested lines of code depending on how many task to finish.
+        So with ES6, we have "promises"!
+        */
+
+        /*
+        A Promise is a cleaner version of callbacks
+        A Promise is an object representing the eventual completion or failure of an asynchronous operation.
+
+        Like in a real-life analogy:
+        1. Commit to something, or promise me to do/finish something
+        2. When the code/task is completed, JS will let me know and give me access to whatever the result is
+        3. The promise has two results:
+            - Either done/completed => So it will be "Resolved"
+            - Or undone/not completed => So it will be "Rejected"
+
+        It's a very nice example about promises
+        Link: https://javascript.info/promise-basics
+
+        Essentially, a promise is a returned object to which you attach callbacks, 
+        instead of passing callbacks into a function.
+
+        Link: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises
+        Link: https://www.w3schools.com/js/js_promise.asp
+
+        Best practical example of "Promises" is when we fetch data from an external API:
+        - We ask for these remote info (data), sending a request
+        - Waiting for a couple of seconds
+        - It comes back, return a result (with pass or fail)  
+        */
+
+        /*
+        Below, we are creating a Promise object called "promise"
+
+        This object "promise" links the following two things together:
+        - the "Production Code" => Doing something that takes time, like some code that loads the data over a network.
+        - the "Consuming Code" => Using the result of the "Production Code" when it's ready, like a couple of functions that need that result as parameter to be used.
+        */
+
+        // The constructor syntax for a promise object "promiseObj1":
+        // The function passed to new Promise is called the executor. 
+        let promiseObj1 = new Promise(function (resolve, reject) {
+            // executor (the producing code, "singer")
+        });
+
+        // Or using ES6 Arrow Function syntax
+        let promiseObj2 = new Promise((resolve, reject) => {
+            // executor 
+        });
+
+        /*
+        NOTE:
+        The arguments "resolve" and "reject" are callbacks 
+        provided by JavaScript itself. Our code is only inside the executor.
+        
+        NOTE:
+        Don't forget that "resolve" and "reject" in our example below are just a function arguments, 
+        so don't be confused thinking that we have to use the same keyword "resolve" and "reject"!
+        It's just by convention, so we can use:
+        - new Promise((x, y) => { ... }
+        - new Promise((a, b) => { ... }
+        But JS will use the first parameter (whatever name you give it) for the resolve 
+        and second parameter (whatever name you give it) for the reject
+
+        Please refer to my JS repos if you need any review in using functions
+
+        In other word, The executor receives two arguments: resolve and reject. 
+        These functions are pre-defined by the JavaScript engine, 
+        so we don't need to create them. We should only call one of them when ready.
+
+        
+        Basic Template from W3schools:
+        Link: https://www.w3schools.com/js/js_promise.asp
+
+        let myPromise = new Promise(function(myResolve, myReject) {
+            // "Producing Code" (May take some time)
+            myResolve(); // when successful
+            myReject();  // when error
+        });
+
+        // "Consuming Code" (Must wait for a fulfilled Promise)
+        myPromise.then(
+            function(value) { 
+                // code if successful
+            },
+            function(error) {
+             // code if some error
+            }
+        );
+        */
+
+        /*
+        Let's take a simple example:
+        a promise from a students to get a high average value (A+ => 90 or more) for his/her two exams
+        */
+        let promise = new Promise((resolve, reject) => {
+            // executor (the producing code, "Student's Promise!")
+            // Change the value to see both resolve and reject 
+            let exam1 = 83;
+            let exam2 = 90;
+            let avg = (exam1 + exam2) / 2;
+
+            if (avg >= 90) {
+                // Resolve the promise
+                // We can pass anything to promise()
+                resolve("Passing with A+");
+            } else {
+                // Reject the promise => using reject() function
+                // (parameter) reject: (reason?: any) => void
+                // We can pass anything to reject()
+                reject("Failed to get A+");
+            }
+        });
+
+        // Calling our promise object
+        // Test:
+        console.log(promise);
+        /*
+        OUTPUT: when resolve
+        Promise {<fulfilled>: 'Passing with A+'}
+        [[Prototype]]: Promise
+        [[PromiseState]]: "fulfilled"
+        [[PromiseResult]]: "Passing with A+"
+        
+        OUTPUT: when reject
+        Promise {<rejected>: 'Failed to get A+'}
+        [[Prototype]]: Promise
+        [[PromiseState]]: "rejected"
+        [[PromiseResult]]: "Failed to get A+"
+
+        JS will throw this error: Uncaught (in promise) Failed to get A+
+
+        Notice that after adding .then() clause we will not see this message "Failed to get A+"
+        as JS error code in red color
+        */
+
+        /*
+        A Promise object serves as a link between the executor "new Promise((resolve, reject) => { }"
+        and the consuming functions, which will receive the result or error. 
+        Consuming functions can be implemented using the methods .then and .catch.   
+        
+        The syntax for .then is:
+        promise.then(
+            function(result) { 
+                // handle a successful result 
+            },
+            function(error) { 
+                // handle an error 
+            }
+        );
+
+        OR using the Arrow ES6 syntax:
+        promise.then(
+            (result) => { 
+                // handle a successful result 
+            },
+            (error) => { 
+                // handle an error 
+            }
+        );
+        */
+
+        // Put it into practice:
+        promise.then(
+            // The first function (result) will be executed with "resolve"
+            (result) => {
+                console.log(`Inside .then() method = Resolved Promise => ${result}`);
+            },
+            // The second function (error) will be executed with "reject"
+            (error) => {
+                console.log(`Inside .then() method = Rejected Promise => ${error}`);
+            }
+        )
+
+        // or even use this syntax for result/error functions without brackets ()
+        // "Yes, we can run multiple .then() when calling our promise object multiple times :-)":
+        promise.then(
+            // The first function (result) will be executed with "resolve"
+            result => {
+                console.log(`Inside .then() method = Resolved Promise => ${result}`);
+            },
+            // The second function (error) will be executed with "reject"
+            error => {
+                console.log(`Inside .then() method = Rejected Promise => ${error}`);
+            }
+        )
+
+        /*
+        NOTE: 
+        - If we're interested only in successful completions (The resolve function), 
+        then we can provide only one function argument to .then:
+
+        - since there is no second function to handle the reject in the example below,
+        JS will throw again the same red code error: Uncaught (in promise) Failed to get A+
+        */
+        // promise.then(
+        //     // The first function (result) (it's the only function) will be executed with "resolve"
+        //     result => {
+        //         console.log(`Inside .then() method = Resolved Promise => ${result}`);
+        //     }
+        // )
+
+        /*
+        Following the idea from the code (NOTE) above of adding one function for resolve,
+        If we're interested only in errors (the reject function), 
+        then we can use "null" as the first argument: .then(null, errorHandlingFunction). 
+        Or we can use .catch(errorHandlingFunction), which is exactly the same:
+
+        Please be advised that in order to see the result of the following code lines,
+        you have to comment the promise.then(result =>{})
+        */
+
+        // First: Let's try using "null":
+        promise.then(
+            // The first function is ignored/skipped => null 
+            null,
+            // The second function (error) (it's the only function) will be executed with "reject" 
+            error => {
+                console.log(`Inside .then() method = Resolved Promise => ${error}`);
+            }
+        )
+
+        // Second: Let's try using "catch()":
+        // Notice that catch() will only deal with the reject option
+        // as it is just a complete analog of .then(null, f), it's just a shorthand.
+        promise.catch(
+            error => {
+                console.log(`Inside .then() method = Resolved Promise => ${error}`);
+            }
+        )
+
+
+        // For better understanding let's take another example and use promise => then => catch
+        let myPromise = new Promise((myResolve, myReject) => {
+            // Production code (May take some time):
+            // Promise to give you only even numbers:
+            let num = 7; // Instead of hard coding the value of num you can change the code by getting a value from the user using prompt() for example
+            if (num % 2 == 0) {
+                // when successful: => even number
+                myResolve(`The number ${num} is even`); // The first parameter will refer to the JS resolve function
+            } else {
+                // when error: => odd number
+                myReject(`The number ${num} is odd`); // The second parameter will refer to the JS reject function
+            }
+        })
+
+        // We can use .then().catch() chaining methods:
+        myPromise.then(
+            myPromise => {
+                console.log("Ok, promise achieved! " + myPromise);
+                // Ok, promise achieved! The number 8 is even
+            }
+        ).catch(
+            myReject => {
+                console.log("No, promise not achieved! " + myReject);
+                // No, promise not achieved! The number 7 is odd
+            }
+        )
+
+        /*
+            After having an idea about promise object and its method,
+            try to apply the knowledge of using promises with setTimeout() and a callback() function
+            and apply promise code:
+        */
+
+        // this function "promiseTimeout" accepts "ms" argument to refer to Milliseconds
+        function promiseTimeout(ms) {
+            /*
+            This function is returning a promise object
+            this promise object accepting a callback function with two promise parameters: 
+            - resolve
+            - reject 
+
+            The object promise will call:
+            - resolve when operation succeeds
+            - reject when operation fails
+            */
+            return new Promise((resolve, reject) => {
+                /*
+                Here we can write our code that needs time to accomplished
+                for example:
+                - Fetch an API
+                - Get Data from Database 
+                - reading and loading a file I/O
+
+                in our case we just use setTimeout again:
+                we will use this syntax:
+                setTimeout(ourCode, time);
+
+                ourCode => will be just calling resolve by setTimeout
+                */
+
+                // Testing:
+                console.log("Resolve: ", resolve); // Resolve:  ƒ () { [native code] }
+                console.log("Reject: ", reject); // Reject:  ƒ () { [native code] }
+
+                setTimeout(resolve, ms);
+            });
+        }
+
+        // calling our function promiseTimeout() and passing 2 seconds
+        // Notice below we are using the method chaining
+        /*
+        promiseTimeout(2000)
+        .then( our code/action if succeeded )
+        .catch( our code/action if failed )
+
+        Don't forget that JS will run/call:
+        - then( ourFunction() ) method on success when resolve
+        - catch( ourFunction() ) method on fails when reject
+        */
+
+        setTimeout(
+            () => {
+                console.log('\n\n');
+                console.log('run promiseTimeout() function with then() and catch():');
+                console.log('*****************************************************');
+            }, 10000);
+
+        promiseTimeout(10000)
+            .then(() => {
+                console.log('Mission Accomplished#1!');
+            })
+            /*
+            As explained above, catch will only run if code fails or any other of rejection reason
+            */
+            .catch(() => {
+                console.log('Mission Impossible');
+            });
+
+
+        /*
+        for more learning and testing, using two then() methods:
+        - then() => to display our one custom message: Mission Accomplished#2!
+        - then() => to display our one custom message: Again, don't forget that your mission is done!
+        */
+        setTimeout(
+            () => {
+                console.log('\n\n');
+                console.log('run promiseTimeout() function with then() and then() and catch():');
+                console.log('****************************************************************');
+            }, 14000);
+
+        promiseTimeout(14000)
+            .then(() => {
+                console.log('Mission Accomplished#2!');
+            })
+            .then(() => {
+                console.log('Again, don\'t forget that your mission is done!');
+            })
+            .catch(() => {
+                console.log('Mission Impossible');
+            });
+
+
+        /*
+        for more learning and testing, using two then() methods:
+        - Plain then() => to display our one custom message
+        - then() with parameter named "response" => to display the response object message
+        */
+        setTimeout(
+            () => {
+                console.log('\n\n');
+                console.log('run promiseTimeout() function with then() that return promise object to the next then() and catch()');
+                console.log('****************************************************************');
+            }, 18000);
+
+        promiseTimeout(18000)
+            .then(() => {
+                console.log('Mission Accomplished#3!');
+                /*
+                If we are only interested in resolve, we can use the shorthand of returning only the resolve method
+                instead of returning the full promise object with resolve and reject:
+
+                and this will be passed on to the next then()
+                */
+                let msg = "'Trust me, your mission is done!'";
+                return Promise.resolve(msg);
+            })
+            .then((response) => {
+                console.log(response);
+            })
+            .catch(() => {
+                console.log('Mission Impossible');
+            }); 
+    </script>
+</body>
+
+</html>

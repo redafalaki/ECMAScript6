@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Using Promises 3</title>
+</head>
+
+<body>
+    <script>
+        /*
+         To recap, in JS we have setTimeout() to run/trigger/call a callback() function after waiting for certain time in milliseconds.
+ 
+         We will use this global method with Promises
+        */
+        function promiseToWaitFor(ms) {
+            /*
+             Returning a promise object,
+             as we did before, the promise object constructor is the place where we write our logic "The Executor",
+             and we can do it by setting up an anonymous function,
+             This anonymous function of new Promise() takes two parameters:
+             - First => for success => using the name "resolve" just by convention
+             - Second => for failure => using the name "reject" just by convention
+
+            We can use only one parameter if only want the success            
+            */
+            return new Promise((resolve, reject) => {
+                // These two parameters "resolve" and "reject" are functions, so we can use them inside setTimeout()
+                // passing only resolve to complete/resolve the promise when time is up
+                setTimeout(resolve, ms);
+
+                // Now to see the value of only reject use/uncomment this code: setTimeout(reject, ms);
+                // comment the above line => setTimeout(resolve, ms);
+                // setTimeout(reject, ms);
+            });
+        }
+
+        promiseToWaitFor(2000)
+            // Using .then() with success:
+            .then(() => {
+                console.log('Done!');
+            })
+            // using .catch() with fail, catch() statement will run only if there is an error or no resolve:
+            .catch(() => {
+                console.log('Error!');
+            });
+
+
+        // Or calling promiseToWaitFor() with multiple/2 then() methods:
+        promiseToWaitFor(4000)
+            // Using .then() with success:
+            .then(() => {
+                console.log('Well Done!');
+            }).then(() => {
+                console.log('Perfectly Done!');
+            }).catch(() => {
+                console.log('Error!');
+            });
+        /*
+            In the example above:
+            The message "Well Done!" will be printed 
+            and the message "Perfectly Done!" will be printed immediately after the previous message
+
+            But we can also make the first .then() return the same custom function to the next .then()
+            check the example below:
+            The message "Well Done Again!" will be printed 
+            and the message "Perfectly Done Again!" will be printed after 3 seconds from the previous message            
+        */
+        promiseToWaitFor(6000)
+            // Using .then() with success:
+            .then(() => {
+                console.log('Well Done Again!');
+                return promiseToWaitFor(3000);
+            }).then(() => {
+                console.log('Perfectly Done Again!');
+            }).catch(() => {
+                console.log('Error!');
+            });
+
+        /*
+        Beside return a function, the current .then() can also return parameter to be used with the next .then()
+        check the example below:
+        */
+        promiseToWaitFor(8000)
+            // Using .then() with success:
+            .then(() => {
+                console.log('Well Done Again Finally!');
+                return promiseToWaitFor(3000);
+            }).then(() => {
+                console.log('Perfectly Done Again Finally!');
+                return Promise.resolve(4);
+            }).then((result) => {
+                console.log(`We have called our function ${result} time(s).`);
+            }).catch(() => {
+                console.log('Error!');
+            });
+
+
+        // Notice below, we are passing invalid value (not numeric value):
+        // we we are going to see the message below immediately: Done even with invalid value!
+        promiseToWaitFor("ABC")
+            // Using .then() with success:
+            .then(() => {
+                console.log('Done even with invalid value!');
+            })
+            // using .catch() with fail, catch() statement will run only if there is an error or no resolve:
+            .catch(() => {
+                console.log('Error!');
+            });
+
+        // Let's modify our function by creating another one to avoid any confusion:
+        // Let's name it promiseToWaitOrFail()
+        function promiseToWaitOrFail(ms) {
+            return new Promise((resolve, reject) => {
+                // adding if condition for our executer part:
+                if (typeof ms !== "number") {
+                    // reject();
+                    // OR:
+                    reject(new Error(`What's ${ms}?`));
+                } else {
+                    setTimeout(resolve, ms);
+                }
+            });
+        }
+
+        // Now below the catch() statement will be run since we have the reject() method is activated in the executer:
+        promiseToWaitOrFail("ABC")
+            // Using .then() with success:
+            .then(() => {
+                console.log('Done only when passing number of seconds');
+            })
+            // using .catch() with fail, catch() statement will run only if there is an error or no resolve:
+            .catch((errMsg) => {
+                console.log('Invalid number of seconds! ' + errMsg);
+            });
+
+        promiseToWaitOrFail(1000)
+            // Using .then() with success:
+            .then(() => {
+                console.log('Done only when passing number of seconds');
+            })
+            // using .catch() with fail, catch() statement will run only if there is an error or no resolve:
+            .catch((errMsg) => {
+                console.log('Invalid number of seconds!');
+            });
+    </script>
+</body>
+
+</html>

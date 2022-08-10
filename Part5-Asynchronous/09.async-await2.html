@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Async/Await 2</title>
+</head>
+
+<body>
+    <script>
+        /*
+          Using the same example/function from Promises,
+          try to apply the knowledge of using promises with setTimeout() and a callback() function
+          and Promises to apply async code:
+
+          Let's review it first
+      */
+
+
+        // this function "promiseTimeout" accepts "ms" argument to refer to Milliseconds
+        function promiseTimeout(ms) {
+            /*
+            This function is returning a promise object
+            this promise object accepting a callback function with two promise parameters: 
+            - resolve
+            - reject 
+
+            The object promise will call:
+            - resolve when operation succeeds
+            - reject when operation fails
+            */
+            return new Promise((resolve, reject) => {
+                /*
+                Here we can write our code that needs time to accomplished
+                for example:
+                - Fetch an API
+                - Get Data from Database 
+                - reading and loading a file I/O
+
+                in our case we just use setTimeout again:
+                we will use this syntax:
+                setTimeout(ourCode, time);
+
+                ourCode => will be just calling resolve by setTimeout
+                */
+
+                // Look at the code below, 
+                // You can make a mistake by passing ms1 instead of ms to run the catch()
+                setTimeout(resolve, ms);
+            });
+        }
+
+        promiseTimeout(2000)
+            .then(() => {
+                console.log('Mission Accomplished#1!');
+            })
+            /*
+            As explained above, catch will only run if code fails or any other of rejection reason
+            */
+            .catch((error) => {
+                console.log('Mission Impossible due to this error: ', error);
+            });
+
+        promiseTimeout(4000)
+            .then(() => {
+                console.log("Done!");
+            })
+            /*
+            As explained above, catch will only run if code fails or any other of rejection reason
+            */
+            .catch((rej) => {
+                console.log(rej);
+            });
+
+        /*
+        Adding async before this function is indicating that this function has  await call inside of it
+
+        An async function is a function declared with the async keyword, 
+        and the await keyword is permitted within it. 
+        The async and await keywords enable asynchronous, promise-based behavior 
+        to be written in a cleaner style, avoiding the need to explicitly configure promise chains.
+        */
+        async function asyncFunCall() {
+            console.log("Start Calling...");
+            await promiseTimeout(7000); // passing 5000 ms for 7 seconds
+            /*
+            To See the differences, the message below will be printed:
+            - right immediately WITHOUT (async, await)
+            - After 5 seconds based on the passing time WITH (async, await)
+ 
+            So try to run the code after removing (async/await)
+            */
+            console.log("Your task is done now!");
+        }
+
+        asyncFunCall();
+
+        // Another Example
+        async function simulateLongOperation() {
+            // await => pauses while operation completes
+            /*
+            Since this function has async and await inside it for calling promiseTimeout() of 2000
+            so there will be await of 2 seconds then your 
+            wait for the promise to be finish, then run the next line of code,
+            but other things/code in the script will still be working/running
+            */
+            await promiseTimeout(2000);
+            return 100;
+        }
+
+        async function run() {
+            const answer = await simulateLongOperation();
+            console.log(answer); // 100
+        }
+
+        run();
+
+        /*
+        Create our same function from before "waitFor()"
+        */
+        const waitFor = (seconds) => new Promise((resolve) => setTimeout(resolve, seconds * 1000));
+
+        // create an asynchronous function as it has the keyword async
+        const count = async () => {
+            console.log("Waiting for Zero seconds");
+            // using await keyword to wait for whatever number of seconds we are passing:
+            await waitFor(2);
+            console.log("Waiting for 2 seconds");
+
+            await waitFor(4);
+            console.log("Waiting for 4 seconds");
+
+            await waitFor(6);
+            console.log("Waiting for 6 seconds");
+
+            await waitFor(8);
+            console.log("Waiting for 8 seconds");
+            /*
+            Tip: you can think about await is like when we use generators functions
+            that have the keywords "yield".
+            
+            On that generator function, JS will stop at the line when reaches "yield" keyword,
+            and it will resume the process to the next line on .next() method.
+
+            With Async/Await, JS will stop at the line when reaches "await" keyword,
+            and it will resume the process to the next line after finishing the task/timeout for the await code/function.
+            */
+        }
+
+        count();
+
+        /*
+        As a conclusion, async/wait is syntactical format that make our code (functions) more readable and less cluttered. 
+        Async/Await is simply asynchronous code (asynchronous implementation and behaviour) with synchronous code structure because of the await syntax that makes the code looks a little bit cleaner.
+        */
+
+
+    </script>
+</body>
+
+</html>

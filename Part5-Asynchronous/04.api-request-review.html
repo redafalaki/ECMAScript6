@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX Request Boilerplate</title>
+</head>
+
+<body>
+    <script>
+        /* 
+        Using AJAX API Request (Quick Review):
+        **************************************
+        Notice the code below, can be considered as the very basic boilerplate for AJAX request
+        */
+
+        /*
+        Practising Promises with API request for a JSON DATA:
+
+        For XMLHttpRequest(), You can refer to my intensive code examples about using API Requests:
+        Link: https://github.com/anmarjarjees/fssd-api/tree/a2a24af13c75c50d82bf11d39cf3513d4062d009
+
+        Usually in a real world we will load JSON data from a dynamic source:
+        In this example, we will fetch data from a remote online resource. 
+        Data are being transferred/fetched in JSON format as the standard format 
+        to be used by all the programming languages
+        
+        The URL for my JSON sample for API demo are:        
+        https://anmarjarjees.github.io/json-examples/music-inst.json
+
+        Or use this link:
+        https://anmarjarjees.github.io/json-api/music-inst.json
+
+        Fetching/getting our data as JSON file from an GitHub API of my repo with some modifications:
+        The following example from my repo link with extra modifications:
+        https://github.com/anmarjarjees/fssd-api/blob/a2a24af13c75c50d82bf11d39cf3513d4062d009/Part01-JSON-AJAX/script3.js
+        */
+
+        /*
+        xhr.onreadystatechange() vs xhr.onload():
+        - onload() was added to XMLHttpRequest whereas onreadystatechange() were initially included in XMLHttpRequest since the original specifications, so it's supported by all browsers, while onload() is supported by the new browsers. IE doesn't support .onload(), but who is using IE!
+        - A readystatechange occurs (are being called) several times in the life of an AJAX request 
+        as it progresses to different stages (1, 2, 3, then 4). onload event only occurs when the request has successfully completed.
+        - on.onreadystatechange() needs to check the .readyState to be 4 because it's being called multiple times, Since onload is only being called one time so no check for readyState is needed
+        */
+
+        // First Example: Using .onreadystatechange()
+        // 1. create our object
+        const xhr = new XMLHttpRequest();
+        const url = 'https://anmarjarjees.github.io/json-api/music-inst.json';
+
+        // 2. open the connection with the remote server to get the data as JSON file:
+        xhr.open('GET', url);
+
+        // 3. run the "onreadystatechange"
+        xhr.onreadystatechange = function () {
+            // Testing
+            // console.log(this);
+            /*
+            XMLHttpRequest {readyState: 2, timeout: 0, withCredentials: false, upload: XMLHttpRequestUpload, onreadystatechange: ƒ, …}
+            */
+            // Check if everything has completed and the status is "OK"
+            if (this.readyState == 4 && this.status == 200) {
+                // start getting the info:
+
+                // Use the JavaScript function JSON.parse()
+                // to convert text/string into a JavaScript object:
+                /*
+                    Remember that "this.responseText" is just a string in JSON format
+                    it's not a JSON Object
+                    We need to use JSON.parse() method to convert this string to JSON Object
+                */
+                data = JSON.parse(this.responseText);
+                // for testing
+                console.log("First Example: ", data); // (3) [{…}, {…}, {…}]
+                /*
+                    [] ==> array symbol
+                    {} ==> object symbol
+
+                    data = [ { item1 } , { item2 }, { item2 } ]
+                    item1 object => piano instrument
+                    item2 object => guitar instrument
+                    item3 object => ukulele instrument
+                    Each item has 3 properties:
+                    1- name: piano, guitar, or ukulele
+                    2- history: new, old, or very old
+                    3- specs: { prop1, prop2 } <= JSON object that contains two properties of type array!
+                    --- prop1: is an array named "type" that contains 3 elements
+                    --- prop2: is an array named "category" that contains 3 elements
+
+                    "name"="Piano"; [Easy]
+                    "specs" = JSON Object
+                    {
+                        "type": [ array elements ]
+                        "category": [array elements ]
+                    }
+                */
+            } else {
+                // We can skip else statement, it was added to show the changes in the readyState value
+                // for testing
+                console.log(this.readyState);
+                // the console.log message will be displayed two times:
+                // 2 then 3
+            }
+        }  // end onreadystatechange function
+
+        // 4. send our request by using send() method of XMLHttpRequest object
+        xhr.send();
+        // We are done with AJAX code :-)
+
+        // Second Example: Using .onload()
+        // 1. create our object
+        const xhr2 = new XMLHttpRequest();
+        const url2 = 'https://anmarjarjees.github.io/json-examples/music-inst.json';
+
+        // We can create another constant for the method:
+        const method = "GET";
+
+        // 2. open the connection with the remote server to get the data as JSON file:
+        xhr2.open(method, url2);
+
+        // 3. run the "onload"
+        xhr2.onload = function () {
+            // console.log(this); 
+            // Check if everything has completed and the status is "OK"
+            if (this.status == 200) {
+                // start getting the info:
+
+                // Use the JavaScript function JSON.parse()
+                // to convert text/string into a JavaScript object:
+                /*
+                    Remember that "xhr.responseText" is just a string in JSON format
+                    it's not a JSON Object
+                    We need to use JSON.parse() method to convert this string to JSON Object
+                */
+                const data = JSON.parse(xhr2.responseText);
+                // for testing
+                console.log("Second Example: ", data); // (3) [{…}, {…}, {…}]
+            }
+        } // end onload function
+
+        // 4. send our request by using send() method of XMLHttpRequest object
+        xhr2.send();
+
+
+        // Third Example: using arrow function
+        // 1. create our object
+        const xhr3 = new XMLHttpRequest();
+        const url3 = 'https://anmarjarjees.github.io/json-examples/music-inst.json';
+
+        // We can create another constant for the method:
+        const way = "GET";
+
+        // 2. open the connection with the remote server to get the data as JSON file:
+        xhr3.open(way, url3);
+
+        /*
+        Important Note:
+        Please be advised about the value of "this" keyword:
+
+        Case#1: (Wrong)
+        - With arrow function, "this" will have the global scope to refer to the Window object
+        - Which is wrong as we want the xhr object NOT the window object!
+        Window {window: Window, self: Window, document: document, name: '', location: Location, …}
+
+        xhr.onreadystatechange = () => {
+            console.log(this);
+        }
+
+        OR:
+
+        xhr.onload = () => {
+            console.log(this);
+        }
+
+        Case#2: (Right)
+        - With anonymous function, "this" will refer to its object "xhr":
+        - Which is right as we want the xhr object
+        XMLHttpRequest {readyState: 4, timeout: 0, withCredentials: false, upload: XMLHttpRequestUpload, onreadystatechange: ƒ, …}
+
+        xhr.onreadystatechange = function () {
+            console.log(this);
+        }
+
+        OR:
+
+        xhr.onload = function () {
+            console.log(this);
+        }
+
+        Solution:
+        case#2 is correct and it's working fine with anonymous function,
+        if you want to go with case#1 of using arrow function, you can simple ignore the use of "this",
+        and just use the object xhr itself (refer to the use of "this" with arrow function in this repo),
+        and that's it :-) keep smiling
+        */
+
+        // 3. run the "onload"
+        xhr3.onload = () => {
+            // console.log(this); // this: typeof globalThis (when using arrow function)
+            // Check if everything has completed and the status is "OK"
+            if (xhr3.status == 200) {
+                // start getting the info:
+
+                // Use the JavaScript function JSON.parse()
+                // to convert text/string into a JavaScript object:
+                /*
+                    Remember that "xhr.responseText" is just a string in JSON format
+                    it's not a JSON Object
+                    We need to use JSON.parse() method to convert this string to JSON Object
+                */
+                const data = JSON.parse(xhr3.responseText);
+                // for testing
+                console.log("Third Example: ", data); // (3) [{…}, {…}, {…}]
+            }
+        } // end onload function
+
+        // 4. send our request by using send() method of XMLHttpRequest object
+        xhr3.send();
+
+        /*
+        Other API JSON Format:
+        COVID-19 Canada:
+        https://www.programmableweb.com/api/canadian-covid-19
+        https://api.covid19tracker.ca/summary
+
+        Flu shot clinics:
+        https://data.ontario.ca/dataset/flu-shot-clinics
+
+        NOTE:
+        To avoid the normal error of "...has been blocked by CORS policy..."
+        ,which is happens when requesting a API data using our local machine, 
+        you can run your code in a virtual server machine like installing XAMPP as we do with PHP.
+        Or add/install an extension to your VScode to make it work as a server
+
+        */
+    </script>
+</body>
+
+</html>

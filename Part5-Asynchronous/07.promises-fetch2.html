@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promises and Fetch 2</title>
+</head>
+
+<body>
+    <script>
+        const url = 'http://api.open-notify.org/astros.json';
+
+        fetch(url)
+            .then((response) => response.json())
+            .then(console.log);
+        /*
+        {number: 10, people: Array(10), message: 'success'}
+            message: "success"
+            number: 10
+            people: Array(10)
+            0: {name: 'Oleg Artemyev', craft: 'ISS'}
+            1: {name: 'Denis Matveev', craft: 'ISS'}
+            2: {name: 'Sergey Korsakov', craft: 'ISS'}
+            3: {name: 'Kjell Lindgren', craft: 'ISS'}
+            4: {name: 'Bob Hines', craft: 'ISS'}
+            5: {name: 'Samantha Cristoforetti', craft: 'ISS'}
+            6: {name: 'Jessica Watkins', craft: 'ISS'}
+            7: {name: 'Cai Xuzhe', craft: 'Tiangong'}
+            8: {name: 'Chen Dong', craft: 'Tiangong'}
+            9: {name: 'Liu Yang', craft: 'Tiangong'}
+            length: 10
+            [[Prototype]]: Array(0)
+            [[Prototype]]: Object
+        */
+
+        // We can modify the code into a reuseable function:
+        let getAstronautsJsonData = () => fetch(url)
+            .then((response) => response.json())
+
+        getAstronautsJsonData().then((response) => console.log(response));
+        /*
+        For the same reason as mentioned before:
+        Because the then() argument is "response" and what we want to console.log is "response" also
+        So we can omit the "response" and use the shorthand below:
+        */
+        getAstronautsJsonData().then(console.log);
+        // {number: 10, people: Array(10), message: 'success'}
+
+        // Taking the people names:
+        // But let's first use json.propertyName
+        let getPeopleProperty = () => getAstronautsJsonData()
+            .then(json => json.people).then(console.log);
+
+        getPeopleProperty(); // calling the function "getPeopleProperty()" 
+        /*
+        (10) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+            0: {name: 'Oleg Artemyev', craft: 'ISS'}
+            1: {name: 'Denis Matveev', craft: 'ISS'}
+            2: {name: 'Sergey Korsakov', craft: 'ISS'}
+            3: {name: 'Kjell Lindgren', craft: 'ISS'}
+            4: {name: 'Bob Hines', craft: 'ISS'}
+            5: {name: 'Samantha Cristoforetti', craft: 'ISS'}
+            6: {name: 'Jessica Watkins', craft: 'ISS'}
+            7: {name: 'Cai Xuzhe', craft: 'Tiangong'}
+            8: {name: 'Chen Dong', craft: 'Tiangong'}
+            9: {name: 'Liu Yang', craft: 'Tiangong'}
+            length: 10
+            [[Prototype]]: Array(0)
+        */
+
+        // Repeat the same code and mapping through the returned array:
+        let getNames = () => getAstronautsJsonData()
+            .then(json => json.people) // getting only the people property value which is array of objects
+            .then(people => people.map((p) => p.name)); // mapping through the people array
+
+        getNames().then(console.log);
+        /*
+        (10) ['Oleg Artemyev', 'Denis Matveev', 'Sergey Korsakov', 'Kjell Lindgren', 'Bob Hines', 'Samantha Cristoforetti', 'Jessica Watkins', 'Cai Xuzhe', 'Chen Dong', 'Liu Yang']
+        */
+
+        let getCrafts = () => getAstronautsJsonData()
+            .then(json => json.people) // getting only the people property value which is array of objects
+            .then(people => people.map((p) => p.craft));
+
+        getCrafts().then(console.log);
+        /*
+            (10) ['ISS', 'ISS', 'ISS', 'ISS', 'ISS', 'ISS', 'ISS', 'Tiangong', 'Tiangong', 'Tiangong']
+        */
+
+        getNames().then((names) => names.join(", ")).then(console.log);
+        /*
+        Oleg Artemyev, Denis Matveev, Sergey Korsakov, Kjell Lindgren, Bob Hines, Samantha Cristoforetti, 
+        Jessica Watkins, Cai Xuzhe, Chen Dong, Liu Yang
+        */
+
+        // just try outputting to the document:
+        getNames().then((names) => {
+            document.write("<h2>Astronauts Names</h2>");
+            document.write("<ul>");
+            for (let name of names) {
+                document.write("<li> " + name + "</li>");
+            }
+            document.write("</ul>");
+        });
+    </script>
+</body>
+
+</html>
