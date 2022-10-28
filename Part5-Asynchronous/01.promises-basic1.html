@@ -11,6 +11,30 @@
 <body>
     <script>
         /*
+        About JavaScript:
+        JavaScript was originally designed to work as a single-threaded, synchronous language. 
+        This means it has one (single) call stack and one (single) memory heap.
+        JS can run one thing at a time,
+        meaning it executes code in order so one task or step runs after another step, 
+        and each task or piece of code must be finished executing before moving onto the next.
+
+        Not like C and C++ where programmers have to manage the computer memory,
+        JavaScript, Python and C#, some others... 
+        automatically allocate memory when any object (function, varaible, ....) are created 
+        and clear/free the memory when this object is no more in use
+        from any varaible that not in use any more and this process is called "Garbage Collection"
+
+        Stack: frames are created to store "Primitive Types" to be accessed from:
+        Number, Boolean, String, Null, Undefined, Symbol (available from ES6-2015), and BigInt (available from ES2020), frames are being added on top of each other.
+        Link: https://developer.mozilla.org/en-US/docs/Glossary/Primitive
+        Link: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures
+        Link: https://www.javascripttutorial.net/javascript-data-types
+
+        Heap: for storing objects (including functions, arrays, typed arrays, sets, maps, weak sets and weak maps)classes but the object reference varaible is created in the stack  
+
+        Callbacks:
+        To review: In callback, one function is passed to another function as an argument.
+
         Promises in JS help us to work/deal with an asynchronous operation. 
         Asynchronous operation simply means some waiting to be done/finished,
         so there is a delay between asking for something and getting the result (receive it)
@@ -145,7 +169,6 @@
         In other word, The executor receives two arguments: resolve and reject. 
         These functions are pre-defined by the JavaScript engine, 
         so we don't need to create them. We should only call one of them when ready.
-
         
         Basic Template from W3schools:
         Link: https://www.w3schools.com/js/js_promise.asp
@@ -264,7 +287,7 @@
         )
 
         /*
-        NOTE: 
+        IMPORTANT NOTE: 
         - If we're interested only in successful completions (The resolve function), 
         then we can provide only one function argument to .then:
 
@@ -303,7 +326,7 @@
         // as it is just a complete analog of .then(null, f), it's just a shorthand.
         promise.catch(
             error => {
-                console.log(`Inside .then() method = Resolved Promise => ${error}`);
+                console.log(`Inside .catch() method = Rejected Promise => ${error}`);
             }
         )
 

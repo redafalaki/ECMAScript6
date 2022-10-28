@@ -66,6 +66,14 @@
             }
         }
 
+        // 
+        document.write('Self run function:');
+        ((number) => {
+            console.log("Self Invoked: ", number);
+            document.write(`<p>I will run immediately, but your number is ${number}!</p>`);
+            document.write(`<p>If you check the console window, you will see that I will be called immediately!</p>`);
+        })();
+
         // Creating a function for finding the total of numbers in an array:
         let numTotal1 = function (tempArray) {
             let total = 0;
@@ -76,7 +84,7 @@
         }
 
         let myLuckNumbers = [8, 9, 5, 3, 1, 7];
-        document.write(`<p>Total of "${myLuckNumbers}" is: ${numTotal1(myLuckNumbers)}</p>`); // Total of "8,9,5,3,1,7" is: 33
+        document.write(`<p> Total of "${myLuckNumbers}" is: ${numTotal1(myLuckNumbers)}</p>`); // Total of "8,9,5,3,1,7" is: 33
 
         // The same but with arrow array:
         let numTotal2 = (tempArray) => {
@@ -88,10 +96,10 @@
         }
 
         let exams = [88, 92, 95, 93, 91, 87];
-        document.write(`<p>Total of "${exams}" is: ${numTotal2(exams)}</p>`); // Total of "88,92,95,93,91,87" is: 546
+        document.write(`<p> Total of "${exams}" is: ${numTotal2(exams)}</p>`); // Total of "88,92,95,93,91,87" is: 546
 
         // Or passing the values as literal array:
-        document.write(`<p>Total of "100, 200, 300" is: ${numTotal2([100, 200, 300])}</p>`); // Total of "100, 200, 300" is: 600
+        document.write(`<p> Total of "100, 200, 300" is: ${numTotal2([100, 200, 300])}</p>`); // Total of "100, 200, 300" is: 600
 
         /*
         Working with .map()
@@ -181,7 +189,7 @@
         myGameScores.map((number) => {
             total += number;
         });
-        document.write(`<p>Total of "${myGameScores}" is: ${total}</p>`); // Total of "100,90,88,97" is: 375
+        document.write(`<p> Total of "${myGameScores}" is: ${total}</p>`); // Total of "100,90,88,97" is: 375
     </script>
 </body>
 

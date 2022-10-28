@@ -97,6 +97,22 @@
         // console.log(car.check()); // Error => Uncaught TypeError: car.check is not a function
         console.log(car.check);
 
+        /* 
+        Another way to create an object in JS is by using new Constructor():
+        */
+        const book = new Object({
+            title: "Core JAVA Twelfth Edition",
+            author: "Cay Horstman",
+            publisher: "Oracle",
+            released: 2022,
+            getBookInfo: function () {
+                console.log(`Textbook: ${this.title} by ${this.author}, was released in ${this.released}`);
+            }
+        });
+
+        console.log("book Object:", book);
+        book.getBookInfo(); // Textbook: Core JAVA Twelfth Edition by Cay Horstman, was released in 2022
+
         /*
         Examples:
         Creating a function that returns an object
