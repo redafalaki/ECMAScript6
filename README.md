@@ -21,7 +21,7 @@ JavaScript in a nutshell:
 You can review all [the new ES6 features](https://www.w3schools.com/js/js_es6.asp#mark_symbol)
 
 # References and Credits:
-- [Eve Porcello](https://github.com/eveporcello)[Software Developer and Instructor]
+- [Eve Porcello](https://github.com/eveporcello) Software Developer and Instructor
 - [Christopher Harrison](https://github.com/GeekTrainer) Microsoft Technical Advocate at GitHub. Python. TypeScript. 
 - [Ania Kubow](https://github.com/kubowania) Software Developer and part of the core team @FreeCodeCamp
 - [Microsoft Developer Youtube Channel](https://www.youtube.com/c/MicrosoftDeveloper/about)
